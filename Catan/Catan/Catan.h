@@ -6,8 +6,9 @@
 class Catan
 {
 public:
+	Catan();
 	Catan(Player * , Player *);
-	~Catan();
+	//~Catan();
 
 	void findNumber(int, Player *);// hace las cosas despues de tirar el dado
 	void ValidTrade(resources give[], resources request[], Player *);

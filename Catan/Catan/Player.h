@@ -16,7 +16,7 @@ using namespace std;
 class Player {
 
 public:
-
+	Player();
 	Player(string); // constructor
 
 	//Getters y Setters para recursos

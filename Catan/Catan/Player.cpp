@@ -2,7 +2,10 @@
 #include "Catan.h"
 #include "Dock.h"
 
-Player::Player(string name) { // constructor
+Player::Player() {
+	//Que deberis inicializar siempre?
+}
+Player::Player(string nombre) { // constructor
 	wood = 0;
 	sheep = 0;
 	clay = 0;
@@ -12,8 +15,10 @@ Player::Player(string name) { // constructor
 	townsBuilt = 0;
 	roadsBuilt = 0;
 	victoryPoints = 0;
-	this->name = name;
-	myResources = malloc();
+	this->name = nombre;
+
+	myResources = malloc();//NO CORREGI ESTE ERROR DE COMPILACION PORQUE NO SE CUANTO QUERES RESERVAR CON MALLOC
+
 	AbstractBuilding buildings[MAX_BUILDING_AMMOUNT];
 	Road roads[MAX_ROAD_AMMOUNT];
 	int townsBuilt;
@@ -92,6 +97,7 @@ bool Player::tradePlayer(resources give[], resources request[]) {
 	return answer;
 }
 error Player::tradePort(resources give[], resources take, Dock dock) {
+	bool valid;
 	switch (dock.tradeType) {
 	case 'N': // caso aparte porque necesito tener 3 iguales
 		resources giving = give[0];
@@ -126,7 +132,7 @@ error Player::tradePort(resources give[], resources take, Dock dock) {
 		break;
 
 	case 'T':
-		bool valid = getCatan().checkDockTrade(give, WHEAT);
+		 valid = getCatan().checkDockTrade(give, WHEAT);
 		if (valid) {
 			wheat -= 2;
 		}
@@ -136,7 +142,7 @@ error Player::tradePort(resources give[], resources take, Dock dock) {
 		break;
 
 	case 'L':
-		bool valid = getCatan().checkDockTrade(give, CLAY);
+		 valid = getCatan().checkDockTrade(give, CLAY);
 		if (valid) {
 			clay -= 2;
 		}
@@ -145,7 +151,7 @@ error Player::tradePort(resources give[], resources take, Dock dock) {
 		break;
 
 	case 'P':
-		bool valid = getCatan().checkDockTrade(give, STONE);
+		 valid = getCatan().checkDockTrade(give, STONE);
 		if (valid) {
 			stone -= 2;
 		}
@@ -154,7 +160,7 @@ error Player::tradePort(resources give[], resources take, Dock dock) {
 		break;
 
 	case 'M':
-		bool valid = getCatan().checkDockTrade(give, WOOD);
+		 valid = getCatan().checkDockTrade(give, WOOD);
 		if (valid) {
 			stone -= 2;
 		}
@@ -163,7 +169,7 @@ error Player::tradePort(resources give[], resources take, Dock dock) {
 		break;
 
 	case 'O':
-		bool valid = getCatan().checkDockTrade(give, SHEEP);
+		 valid = getCatan().checkDockTrade(give, SHEEP);
 		if (valid) {
 			stone -= 2;
 		}

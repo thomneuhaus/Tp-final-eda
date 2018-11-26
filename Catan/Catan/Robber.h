@@ -8,7 +8,7 @@ class Robber :
 {
 public:
 	int robberNumber = ROBBER_NUMBER;
-	void moveRobber(Player *, Player *);
+	void moveRobber(Player * , Player *);
 	Robber();
 	~Robber();
 };

@@ -12,8 +12,8 @@ public:
 	int setX(int );
 	int setY(int );
 	int setZ(int );
-	bool operator== (Coordinates);
-	void operator= (Coordinates);
+	bool operator == (Coordinates);
+	void operator = (Coordinates);
 private:
 	unsigned int x;
 	unsigned int y;

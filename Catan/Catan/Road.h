@@ -5,6 +5,7 @@ class Road :
 	public AbstractToken
 {
 public:
+	Road();
 	Road(Coordinates);
 	~Road();
 };
