@@ -9,11 +9,12 @@ class Map
 public:
 	Map();
 	~Map();
+	Island * getIslands(void);
+	Dock * getDocks(void);
 
 private:
-	Island tierra[19]; // arreglo de islas
-	Dock mar[5]; // arreglo de puertos
-
-	void setIslandTypes();// para poner las islas al principio
+	Island islands[19]; // arreglo de islas
+	Dock docks[5]; // arreglo de puertos
+	void setIslands();// para poner las islas al principio
 };
 

@@ -116,10 +116,15 @@ error  Catan::buildTown(Coordinates coordinates, Player * player)
 
 error  Catan::buildCity(Coordinates coordinates, Player * player) 
 {
+	if (player->getCitiesBuilt() >= MAX_CITIES) {
+		this->catanError = ERROR_BUILDING_CITY;
+		return catanError;
+	}
+
 	bool found = false;
 	for (int i = 0; i < player->getTownsBuilt() + player->getCitiesBuilt() && !found; i++) //recorro el array de buildings del player
 	{
-		if (player->getBuildings()[i].getTokenCoordinates() == coordinates) // si encuentro un building en ese lugar
+		if (*(player->getBuildings()[i].getTokenCoordinates()) == coordinates) // si encuentro un building en ese lugar
 		{
 			found = true;
 			if (player->getBuildings()[i].getAbstractToken() == TOWN) { // si el building que encontre era un town

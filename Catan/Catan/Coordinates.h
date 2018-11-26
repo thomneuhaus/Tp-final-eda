@@ -2,6 +2,7 @@
 class Coordinates
 {
 public:
+	Coordinates();
 	Coordinates(int, int, int);
 	Coordinates(Coordinates&);
 	// ~Coordinates(); No se bien que onda esto (que le pondria)
@@ -17,5 +18,4 @@ private:
 	unsigned int x;
 	unsigned int y;
 	unsigned int z;
-
 };

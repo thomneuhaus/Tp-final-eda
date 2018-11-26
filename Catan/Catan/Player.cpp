@@ -3,7 +3,6 @@
 #include "Dock.h"
 
 Player::Player(string name) { // constructor
-
 	wood = 0;
 	sheep = 0;
 	clay = 0;
@@ -14,7 +13,21 @@ Player::Player(string name) { // constructor
 	roadsBuilt = 0;
 	victoryPoints = 0;
 	this->name = name;
-
+	myResources = malloc();
+	AbstractBuilding buildings[MAX_BUILDING_AMMOUNT];
+	Road roads[MAX_ROAD_AMMOUNT];
+	int townsBuilt;
+	int citiesBuilt;
+	int roadsBuilt;
+	Catan catan; // para que el player se pueda comunicar con el juego. Por ejemplo en trades, para decir "yo player quiero tradear"
+	string name;
+	int wood;
+	int sheep;
+	int clay;
+	int stone;
+	int wheat;
+	//char development[MAX_DEV_CARDS]; // por si usamos development cards
+	AbstractToken tokens[MAX_TOKEN];
 }
 
 int Player::getClay() {

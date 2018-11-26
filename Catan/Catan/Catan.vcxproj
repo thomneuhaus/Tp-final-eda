@@ -138,11 +138,14 @@
     <ClInclude Include="Server.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AbstractBuilding.cpp" />
     <ClCompile Include="AbstractController.cpp" />
     <ClCompile Include="AbstractPlace.cpp" />
     <ClCompile Include="AbstractToken.cpp" />
     <ClCompile Include="Allegro.cpp" />
     <ClCompile Include="Coordinates.cpp" />
+    <ClCompile Include="Rules.cpp" />
+    <ClCompile Include="Source.cpp" />
     <ClCompile Include="Town.cpp" />
     <ClCompile Include="Catan.cpp" />
     <ClCompile Include="City.cpp" />

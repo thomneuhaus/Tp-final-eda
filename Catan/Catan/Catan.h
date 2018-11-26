@@ -1,14 +1,11 @@
 #pragma once
 #include "Player.h"
 #include "Robber.h"
+#include "Map.h"
 
 class Catan
 {
 public:
-	Player * player1; // los datos de los jugadores se guardan ahi
-	Player * player2;
-	Robber robber;
-	error catanError;
 	Catan(Player * , Player *);
 	~Catan();
 
@@ -22,6 +19,13 @@ public:
 	bool checkDockTrade(resources give[], resources take);
 	error getError();
 	void setError(error);
+	Map getMap(void);
 	error getResource(resources);
+private:
+	Player * player1; // los datos de los jugadores se guardan ahi
+	Player * player2;
+	Robber robber;
+	error catanError;
+	Map map;
 };
 

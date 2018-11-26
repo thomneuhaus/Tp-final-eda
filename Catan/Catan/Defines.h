@@ -6,7 +6,6 @@
 #define MAX_RESOURCE_AMMOUNT 4
 #define BLOCK 4 //Para el arreglo de resources de un player, como pueden ser infinitos, voy agrandando de a 5 bloques cuando se llena
 #define ROBBER_NUMBER 7
-#define MAX_BUILDING_AMMOUNT 9
 #define ROBBER_AMMOUNT 7
 #define TAKE_RESOURCE_NUMBER 4
 #define CITY 'C'
@@ -14,6 +13,9 @@
 #define ROAD 'R'
 #define ROBBER 'L'
 #define MAX_ROAD_AMMOUNT 15
+#define MAX_TOWNS 5
+#define MAX_CITIES 4
+#define MAX_BUILDING_AMMOUNT (MAX_TOWNS + MAX_CITIES)
 typedef enum {
 	ERROR_GETTING_RESOURCE,
 	ERROR_TRADING_RESOURCE,

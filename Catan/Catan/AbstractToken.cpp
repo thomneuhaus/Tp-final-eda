@@ -1,13 +1,17 @@
 #include "AbstractToken.h"
 
+AbstractToken::AbstractToken() {
+	value = 0;
+}
+
 AbstractToken::AbstractToken(char value, Coordinates coordinates)
 {
 	this->value = value;
 	this->tokenCoordinates = coordinates;
 }
 
-Coordinates AbstractToken::getTokenCoordinates(void) {
-	return this->tokenCoordinates;
+Coordinates * AbstractToken::getTokenCoordinates(void) {
+	return &tokenCoordinates;
 }
 void AbstractToken::setTokenCoordinates(Coordinates Coordinates) {
 	this->tokenCoordinates = Coordinates;

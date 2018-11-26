@@ -9,6 +9,7 @@ class AbstractBuilding:
 {
 public:
 	AbstractBuilding(Coordinates);
+	AbstractBuilding();
 	~AbstractBuilding();
 	virtual error getResource(resources); // si es city le da 2 de resource al player, si es town le da 1 resource (del resource que le mandaste)
 private:

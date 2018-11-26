@@ -4,10 +4,11 @@
 class AbstractToken
 {
 public:
+	AbstractToken();
 	AbstractToken(char, Coordinates);
 	void setAbstractToken(char);
 	char getAbstractToken(void);
-	Coordinates getTokenCoordinates(void);
+	Coordinates * getTokenCoordinates(void);
 	void setTokenCoordinates(Coordinates);
 	
 	~AbstractToken();
