@@ -23,8 +23,9 @@ public:
 	islandType getType(void);
 
 private:
-
+	int islandNumber; // en numero de la isla
 	islandType type;
+	bool isBlocked; // por si tiene el robber encima
 
 };
 

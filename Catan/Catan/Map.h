@@ -1,6 +1,6 @@
 #pragma once
 #include "Island.h"
-#include "Puerto.h"
+#include "Dock.h"
 #include <iostream>
 
 
@@ -11,9 +11,9 @@ public:
 	~Map();
 
 private:
-	Island tierra[19];
-	Puerto mar[5];
+	Island tierra[19]; // arreglo de islas
+	Dock mar[5]; // arreglo de puertos
 
-	void setIslandTypes();
+	void setIslandTypes();// para poner las islas al principio
 };
 

@@ -1,12 +1,18 @@
 #pragma once
+#include "Coordinates.h"
+
 class AbstractToken
 {
 public:
-	AbstractToken();
+	AbstractToken(char, Coordinates);
+	void setAbstractToken(char);
+	char getAbstractToken(void);
+	Coordinates getTokenCoordinates(void);
+	void setTokenCoordinates(Coordinates);
+	
 	~AbstractToken();
 private:
-	char x;
-	char y;
-	char z;
+	Coordinates tokenCoordinates;
+	char value;
 };
 

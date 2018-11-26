@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -115,20 +115,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AbstractBuilding.h" />
     <ClInclude Include="AbstractController.h" />
     <ClInclude Include="AbstractPlace.h" />
     <ClInclude Include="AbstractToken.h" />
     <ClInclude Include="Allegro.h" />
-    <ClInclude Include="Casa.h" />
+    <ClInclude Include="Town.h" />
     <ClInclude Include="Catan.h" />
-    <ClInclude Include="Ciudad.h" />
+    <ClInclude Include="City.h" />
     <ClInclude Include="Client.h" />
-    <ClInclude Include="Dice.h" />
+    <ClInclude Include="Defines.h" />
+    <ClInclude Include="Coordinates.h" />
     <ClInclude Include="Island.h" />
     <ClInclude Include="Map.h" />
-    <ClInclude Include="Puerto.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Port.h" />
+    <ClInclude Include="Dock.h" />
+    <ClInclude Include="Resources.h" />
     <ClInclude Include="Robber.h" />
-    <ClInclude Include="Ruta.h" />
+    <ClInclude Include="Rules.h" />
+    <ClInclude Include="Road.h" />
     <ClInclude Include="Server.h" />
   </ItemGroup>
   <ItemGroup>
@@ -136,16 +142,17 @@
     <ClCompile Include="AbstractPlace.cpp" />
     <ClCompile Include="AbstractToken.cpp" />
     <ClCompile Include="Allegro.cpp" />
-    <ClCompile Include="Casa.cpp" />
+    <ClCompile Include="Coordinates.cpp" />
+    <ClCompile Include="Town.cpp" />
     <ClCompile Include="Catan.cpp" />
-    <ClCompile Include="Ciudad.cpp" />
+    <ClCompile Include="City.cpp" />
     <ClCompile Include="Client.cpp" />
-    <ClCompile Include="Dice.cpp" />
     <ClCompile Include="Island.cpp" />
     <ClCompile Include="Map.cpp" />
-    <ClCompile Include="Puerto.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Dock.cpp" />
     <ClCompile Include="Robber.cpp" />
-    <ClCompile Include="Ruta.cpp" />
+    <ClCompile Include="Road.cpp" />
     <ClCompile Include="Server.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
