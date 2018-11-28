@@ -29,8 +29,7 @@ void Map::setIslands()
 		numbers[index] = aux;
 	}
 	int aux = 0;
-	char position = 'A';
-	for ( int i = 0; i < 18; i++)	//Inicializo la tierra vacia
+	for (char position = 'A', int i = 0; i < 18; i++, position++)	//Inicializo la tierra vacia
 	{
 		if (types[i] == DESIERTO) {
 			islands[i] = Island(position, 0, types[i]);
@@ -40,7 +39,6 @@ void Map::setIslands()
 		{
 			islands[i] = Island(position, numbers[i], types[i]);
 		}
-		position++;
 	}
 	islands[18] = Island('A' + 18, aux, types[18]);
 }

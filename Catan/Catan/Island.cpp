@@ -1,7 +1,5 @@
 #include "Island.h"
-Island::Island()
-{
-}
+
 
 Island::Island(char position, int islandNumber, islandType type) {
 	this->position = position;

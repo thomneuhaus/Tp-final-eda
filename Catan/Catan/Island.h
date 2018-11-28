@@ -17,7 +17,6 @@ class Island :
 	public AbstractPlace
 {
 public:
-	Island();
 	Island(char, int, islandType);
 	~Island();
 	islandType getType(void);

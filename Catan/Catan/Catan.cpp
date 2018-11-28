@@ -1,17 +1,5 @@
 #include "Catan.h"
 
-Catan::Catan()
-{
-	//que deberia inicializar siempre?
-}
-
-Catan::Catan(Player * player1, Player * player2)
-{
-	this->player1 = player1;
-	this->player2 = player2;
-	this->catanError = NO_ERROR;
-}
-
 bool Catan::PlayerWantsToTrade(resources give[], resources request[], Player * player) {
 	// aca va la funcion que pide si el otro player quiere cambiar.
 	bool trade = false;
@@ -113,6 +101,13 @@ void Catan::findNumber(int diceNumber, Player * player)// recibe el numero tirad
 	}
 }
 
+Catan::Catan(Player * player1, Player * player2)
+{
+	this->player1 = player1;
+	this->player2 = player2;
+	this->catanError = NO_ERROR;
+}
+
 error  Catan::buildTown(Coordinates coordinates, Player * player) 
 {
 	Town newTown(coordinates);
@@ -152,6 +147,6 @@ error  Catan::buildRoad(Coordinates coordinates, Player * player) {
 }
 
 
-//Catan::~Catan()
-//{
-//}
+Catan::~Catan()
+{
+}

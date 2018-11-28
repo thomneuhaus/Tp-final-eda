@@ -1,9 +1,6 @@
 #include "Road.h"
 
-Road::Road()
-{
-	//que deberia inicializar si o si?
-}
+
 
 Road::Road(Coordinates coordinates)
 {
