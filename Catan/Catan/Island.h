@@ -1,5 +1,4 @@
 #pragma once
-#include "AbstractPlace.h"
 
 typedef enum
 {
@@ -13,15 +12,17 @@ typedef enum
 
 } islandType;
 
-class Island :
-	public AbstractPlace
+class Island
 {
 public:
+	Island();
 	Island(char, int, islandType);
 	~Island();
-	islandType getType(void);
-	char getPosition(void);
-	void setBlock(bool);
+	islandType getType(void); //FUNCIONA
+	char getPosition(void); //FUNCIONA
+	void setBlock(bool); //FUNCIONA
+	int getNumber(void); //FUNCIONA
+	bool getIsBlocked(void); //FUNCIONA
 
 private:
 	char position;

@@ -10,15 +10,15 @@ AbstractToken::AbstractToken(char value, Coordinates coordinates)
 	this->tokenCoordinates = coordinates;
 }
 
+AbstractToken::~AbstractToken()
+{
+}
+
 Coordinates * AbstractToken::getTokenCoordinates(void) {
 	return &tokenCoordinates;
 }
-void AbstractToken::setTokenCoordinates(Coordinates Coordinates) {
-	this->tokenCoordinates = Coordinates;
-}
-
-AbstractToken::~AbstractToken()
-{
+void AbstractToken::setTokenCoordinates(Coordinates coordinates) {
+	this->tokenCoordinates = coordinates;
 }
 
 void AbstractToken::setAbstractToken(char value) {

@@ -117,7 +117,6 @@
   <ItemGroup>
     <ClInclude Include="AbstractBuilding.h" />
     <ClInclude Include="AbstractController.h" />
-    <ClInclude Include="AbstractPlace.h" />
     <ClInclude Include="AbstractToken.h" />
     <ClInclude Include="Allegro.h" />
     <ClInclude Include="Town.h" />
@@ -140,7 +139,6 @@
   <ItemGroup>
     <ClCompile Include="AbstractBuilding.cpp" />
     <ClCompile Include="AbstractController.cpp" />
-    <ClCompile Include="AbstractPlace.cpp" />
     <ClCompile Include="AbstractToken.cpp" />
     <ClCompile Include="Allegro.cpp" />
     <ClCompile Include="Coordinates.cpp" />

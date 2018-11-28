@@ -1,5 +1,35 @@
 #include "Catan.h"
 
+Catan::Catan(Player * player1, Player * player2)
+{
+	this->player1 = player1;
+	this->player2 = player2;
+	this->catanError = NO_ERROR;
+	Coordinates dessertCoord;
+	getMap()->setDocks();
+	getMap()->setIslands();
+	
+	bool found = false;
+	for (int i = 0; i < ISLANDS_AMMOUNT && !found; i++) {
+		if (getMap()->getIslands()[i].getType() == DESIERTO) {
+			dessertCoord.setX(getMap()->getIslands()[i].getPosition());
+			getMap()->getIslands()[i].setBlock(true);
+			found = true;
+		}
+		else
+			getMap()->getIslands()[i].setBlock(false);
+	}
+	this->robber = Robber(dessertCoord);
+}
+
+void Catan::randomize(void) {
+	srand((unsigned int)time(NULL));
+}
+
+Robber * Catan::getRobber(void) {
+	return &robber;
+}
+
 bool Catan::PlayerWantsToTrade(resources give[], resources request[], Player * player) {
 	// aca va la funcion que pide si el otro player quiere cambiar.
 	bool trade = false;
@@ -44,16 +74,10 @@ void Catan::ValidTrade(resources give[], resources request[], Player * player)//
 
 }
 
-bool Catan::isPortTradeValid(resources give[], resources take, Dock dock) {
-	
-
-
-}
-
-bool Catan::checkDockTrade(resources give[], resources take) {
+bool Catan::checkDockTrade(resources give[], resources resource) { // se fija que todos los resources de give sean iguales
 	for (int i = 0; i <= MAX_PORT_TRADE - 1; i++)
 	{
-		if (give[i] != take)
+		if (give[i] != resource)
 			return false;
 	}
 	return true;
@@ -84,34 +108,34 @@ void Catan::findNumber(int diceNumber, Player * player)// recibe el numero tirad
 		suma2 += player2->getClay();
 		suma2 += player2->getWheat();
 		if (suma1 > ROBBER_AMMOUNT)
-			player1->take4resources();
+			takeResources(player1);
 		if (suma2 > ROBBER_AMMOUNT)
-			player2->take4resources();
+			takeResources(player2);
 		Player * other;
 		if (player == player1) {
 			other = player2;
 		}
 		else
 			other = player1;
-		robber.moveRobber(player, other);
+		moveRobber(player, other, player->selectCoordinatesForRobber());
 	}
 	else {
-		player1->returnResource(diceNumber); //se fija el resource que estamos buscando
-		player2->returnResource(diceNumber);
+		getResource(diceNumber, player1); //se fija el resource que estamos buscando
+		getResource(diceNumber, player2);
 	}
-}
-
-Catan::Catan(Player * player1, Player * player2)
-{
-	this->player1 = player1;
-	this->player2 = player2;
-	this->catanError = NO_ERROR;
 }
 
 error  Catan::buildTown(Coordinates coordinates, Player * player) 
 {
 	Town newTown(coordinates);
 	player->getBuildings()[player->getTownsBuilt() + player->getCitiesBuilt()] = newTown;
+	player->setVictoryPoints(player->getVictoryPoints() + 1);
+	player->setTownsBuilt(player->getTownsBuilt() + 1);
+	player->setWood(player->getWood() - 1); // Para cobrarle porque construyo
+	player->setClay(player->getClay() - 1);
+	player->setSheep(player->getSheep() - 1);
+	player->setWheat(player->getWheat() - 1);
+	return NO_ERROR;
 }
 
 error  Catan::buildCity(Coordinates coordinates, Player * player) 
@@ -126,11 +150,15 @@ error  Catan::buildCity(Coordinates coordinates, Player * player)
 	{
 		if (*(player->getBuildings()[i].getTokenCoordinates()) == coordinates) // si encuentro un building en ese lugar
 		{
+			City newCity(coordinates);
 			found = true;
 			if (player->getBuildings()[i].getAbstractToken() == TOWN) { // si el building que encontre era un town
-				player->getBuildings()[i] = City(coordinates);
+				player->getBuildings()[i] = newCity;
 				player->setTownsBuilt(player->getTownsBuilt() - 1);
 				player->setCitiesBuilt(player->getCitiesBuilt() + 1);
+				player->setVictoryPoints(player->getVictoryPoints() + 1);
+				player->setWheat(player->getWheat() - 2); //para cobrarle si construyo
+				player->setStone(player->getStone() - 3);
 			}
 			else
 				this->catanError = ERROR_BUILDING_CITY;
@@ -144,9 +172,304 @@ error  Catan::buildCity(Coordinates coordinates, Player * player)
 error  Catan::buildRoad(Coordinates coordinates, Player * player) {
 	Road newRoad(coordinates);
 	player->getRoads()[player->getRoadsBuilt()] = newRoad;
+	player->setRoadsBuilt(player->getRoadsBuilt() + 1);
+	player->setWood(player->getWood() - 1); // Para cobrarle porque construyo
+	player->setClay(player->getClay() - 1);
+
+	return NO_ERROR;
 }
 
+bool Catan::tradePlayer(resources give[], resources request[], Player * player) {
+	bool answer = PlayerWantsToTrade(give, request, player);
+	if (answer == true) {
+		ValidTrade(give, request, player);
+	}
+	return answer;
+}
 
-Catan::~Catan()
+error Catan::tradeDock(resources give[], resources take, Dock dock, Player * player) {
+	bool valid;
+	resources giving;
+	switch (dock.getTradeType()) {
+	case 'N': // caso aparte porque necesito tener 3 iguales
+		giving = give[0];
+		for (int i = 1; i <= MAX_PORT_TRADE; i++)
+		{
+			if (give[i] != giving)
+			{
+				setError(ERROR_TRADING_PORT);
+				return getError();
+			}
+		}
+		switch (giving) {
+		case WOOD:
+			player->setWood(player->getWood() - 3);
+			break;
+		case SHEEP:
+			player->setSheep(player->getSheep() - 3);
+			break;
+		case STONE:
+			player->setStone(player->getStone() - 3);
+			break;
+		case WHEAT:
+			player->setWheat(player->getWheat() - 3);
+			break;
+		case CLAY:
+			player->setClay(player->getClay() - 3);
+			break;
+		default:
+			setError(ERROR_TRADING_PORT);
+		}
+
+		break;
+
+	case 'T':
+		valid = checkDockTrade(give, WHEAT);
+		if (valid) {
+			player->setWheat(player->getWheat() - 2);
+		}
+		else
+			setError(ERROR_TRADING_PORT);
+
+		break;
+
+	case 'L':
+		valid = checkDockTrade(give, CLAY);
+		if (valid) {
+			player->setClay(player->getClay() - 2);
+		}
+		else
+			setError(ERROR_TRADING_PORT);
+		break;
+
+	case 'P':
+		valid = checkDockTrade(give, STONE);
+		if (valid) {
+			player->setStone(player->getStone() - 2);
+		}
+		else
+			setError(ERROR_TRADING_PORT);
+		break;
+
+	case 'M':
+		valid = checkDockTrade(give, WOOD);
+		if (valid) {
+			player->setWood(player->getWood() - 2);
+		}
+		else
+			setError(ERROR_TRADING_PORT);
+		break;
+
+	case 'O':
+		valid = checkDockTrade(give, SHEEP);
+		if (valid) {
+			player->setSheep(player->getSheep() - 2);
+		}
+		else
+			setError(ERROR_TRADING_PORT);
+		break;
+	}
+
+	if (getError() == NO_ERROR) {
+
+		switch (take) {
+		case WOOD:
+			player->setWood(player->getWood() + 1);
+			break;
+		case CLAY:
+			player->setClay(player->getClay() + 1);
+			break;
+		case WHEAT:
+			player->setWheat(player->getWheat() + 1);
+			break;
+		case STONE:
+			player->setStone(player->getStone() + 1);
+			break;
+		case SHEEP:
+			player->setSheep(player->getSheep() + 1);
+			break;
+		default:
+			setError(ERROR_TRADING_PORT);
+		}
+	}
+
+	return getError();
+}
+
+error Catan::tradeBank(resources give[MAX_RESOURCE_AMMOUNT], resources take, Player * player) {
+	resources giving = give[0];
+	for (int i = 1; i <= MAX_RESOURCE_AMMOUNT; i++)
+	{
+		if (give[i] != giving)
+		{
+			setError(ERROR_TRADING_PORT);
+			return getError();
+		}
+	}
+	switch (giving) {
+	case WOOD:
+		player->setWood(player->getWood() - 4);
+		break;
+	case SHEEP:
+		player->setSheep(player->getSheep() - 4);
+		break;
+	case STONE:
+		player->setStone(player->getStone() - 4);
+		break;
+	case WHEAT:
+		player->setWheat(player->getWheat() - 4);
+		break;
+	case CLAY:
+		player->setClay(player->getClay() - 4);
+		break;
+	default:
+		setError(ERROR_TRADING_PORT);
+	}
+	if (getError() == NO_ERROR) {
+
+		switch (take) {
+		case WOOD:
+			player->setWood(player->getWood() + 1);
+			break;
+		case CLAY:
+			player->setClay(player->getClay() + 1);
+			break;
+		case WHEAT:
+			player->setWheat(player->getWheat() + 1);
+			break;
+		case STONE:
+			player->setStone(player->getStone() + 1);
+			break;
+		case SHEEP:
+			player->setSheep(player->getSheep() + 1);
+			break;
+		default:
+			setError(ERROR_TRADING_PORT);
+		}
+	}
+
+	return getError();
+}
+
+void Catan::takeResources(Player * player) {
+	resources * takeResource = player->selectResources((player->getWood() + player->getSheep() + player->getClay() + player->getWheat() + player->getStone()) / 2);
+	for (int i = 0; i < (player->getWood() + player->getSheep() + player->getClay() + player->getWheat() + player->getStone())/2; i++)
+	{
+		switch (takeResource[i]) {
+		case WOOD:
+			player->setWood(player->getWood() - 1);
+			break;
+		case CLAY:
+			player->setClay(player->getClay() - 1);
+			break;
+		case WHEAT:
+			player->setWheat(player->getWheat() - 1);
+			break;
+		case STONE:
+			player->setStone(player->getStone() - 1);
+			break;
+		case SHEEP:
+			player->setSheep(player->getSheep() - 1);
+			break;
+		default:
+			setError(ERROR_TAKING_RESOURCE_POST_ROBBER);
+		}
+
+	}
+}
+
+error Catan::getResourceBuildings(islandType type, Player* player, int qty)
 {
+	switch (type)
+	{
+	case BOSQUE:
+		player->setWood(player->getWood() + qty);
+		break;
+	case COLINA:
+		player->setClay(player->getClay() + qty);
+		break;
+	case PASTO:
+		player->setSheep(player->getSheep() + qty);
+		break;
+	case CAMPO:
+		player->setWheat(player->getWheat() + qty);
+		break;
+	case MONTAÑA:
+		player->setStone(player->getStone() + qty);
+		break;
+	}
+	return NO_ERROR;
+}
+
+void Catan::moveRobber(Player * player, Player * other, Coordinates newRobberCoordinates) {
+	getRobber()->setTokenCoordinates(newRobberCoordinates);
+	bool hasBuilding = false;
+	for (int i = 0; i < MAX_BUILDING_AMMOUNT && !hasBuilding; i++) {
+		Coordinates * coord = other->getBuildings()[i].getTokenCoordinates();
+		if ((coord->getX() == getRobber()->getTokenCoordinates()->getX()) || (coord->getY() == getRobber()->getTokenCoordinates()->getX()) || (coord->getZ() == getRobber()->getTokenCoordinates()->getX())) {
+			hasBuilding = true;
+		}
+	}
+	if (hasBuilding) {
+		srand((unsigned int) time(NULL));
+		switch (rand() % 5) {
+		case 0:
+			other->setClay(other->getClay() - 1);
+			player->setClay(player->getClay() + 1);
+			break;
+		case 1:
+			other->setSheep(other->getSheep() - 1);
+			player->setSheep(player->getSheep() + 1);
+			break;
+		case 2:
+			other->setWheat(other->getWheat() - 1);
+			player->setWheat(player->getWheat() + 1);
+			break;
+		case 3:
+			other->setStone(other->getStone() - 1);
+			player->setStone(player->getStone() + 1);
+			break;
+		case 4:
+			other->setWood(other->getWood() - 1);
+			player->setWood(player->getWood() + 1);
+			break;
+		}
+	}
+}
+
+error Catan::getResource(int dice, Player * player) {
+	for (int i = 0; i < 19; i++) {
+		if ( (map.getIslands()[i].getNumber() == dice) && (!map.getIslands()[i].getIsBlocked() ) )
+		{
+			for (int j = 0; j < player->getCitiesBuilt() + player->getTownsBuilt(); j++) {
+				if ((player->getBuildings()[j].getTokenCoordinates()->getX() == map.getIslands()[i].getPosition()) || (player->getBuildings()[j].getTokenCoordinates()->getY() == map.getIslands()[i].getPosition()) || (player->getBuildings()[j].getTokenCoordinates()->getZ() == map.getIslands()[i].getPosition())) {
+					if (player->getBuildings()[j].getAbstractToken() == TOWN) {
+						getResourceBuildings(map.getIslands()[i].getType(), player, 1);
+					}
+					else {
+						getResourceBuildings(map.getIslands()[i].getType(), player, 2);
+					}
+				}
+			}
+		}
+	}
+	return NO_ERROR;
+}
+
+Map * Catan::getMap(void) {
+	return &map;
+}
+//Catan::~Catan()
+//{
+//}
+
+Player * Catan::getPlayer1(void) {
+	return player1;
+}
+Player * Catan::getPlayer2(void) {
+	return player2;
+}
+
+Rules Catan::getRules() {
+	return rules;
 }

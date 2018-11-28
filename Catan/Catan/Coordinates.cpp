@@ -12,33 +12,33 @@ Coordinates::Coordinates() {
 	 this->z = z;
 }
 
- Coordinates::Coordinates(Coordinates& coordinates) {
-	 this->x = coordinates.getX();
-	 this->y = coordinates.getY();
-	 this->z = coordinates.getZ();
+ Coordinates::Coordinates(const Coordinates &coordinates) {
+	 this->x = coordinates.x;
+	 this->y = coordinates.y;
+	 this->z = coordinates.z;
  }
 
 int Coordinates::getX() {
-	return this->x;
+	return x;
 }
 
 int Coordinates::getY() {
-	return this->y;
+	return y;
 }
 
 int Coordinates::getZ() {
-	return this->z;
+	return z;
 }
 
-int Coordinates:: setX(int x) {
+void Coordinates:: setX(int x) {
 	this->x = x;
 }
 
-int Coordinates:: setY(int y) {
+void Coordinates:: setY(int y) {
 	this->y = y;
 }
 
-int Coordinates:: setZ(int z) {
+void Coordinates:: setZ(int z) {
 	this->z = z;
 }
 
@@ -51,26 +51,26 @@ bool Coordinates:: operator== (Coordinates coordinates)
 				return true;
 		}
 	}
-	else if (this->y == coordinates.getX())
+	if (this->y == coordinates.getX())
 	{
 		if ((this->x == coordinates.getY() && this->z == coordinates.getZ()) || (this->z == coordinates.getY() && this->x == coordinates.getZ()))
 		{
 			return true;
 		}
 	}
-	else if (this->z == coordinates.getX())
+	if (this->z == coordinates.getX())
 	{
 		if ((this->y == coordinates.getY() && this->x == coordinates.getZ()) || (this->x == coordinates.getY() && this->y == coordinates.getZ()))
 		{
 			return true;
 		}
 	}
-	else
-		return false;
+	return false;
 }
-void Coordinates :: operator= (Coordinates coordinates) 
+Coordinates& Coordinates :: operator= (Coordinates coordinates) 
 {
 	this->setX(coordinates.getX());
 	this->setY(coordinates.getY());
 	this->setZ(coordinates.getZ());
+	return *this;
 }

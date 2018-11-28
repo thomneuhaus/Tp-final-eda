@@ -4,16 +4,16 @@ class Coordinates
 public:
 	Coordinates();
 	Coordinates(int, int, int);
-	Coordinates(Coordinates&);
+	Coordinates(const Coordinates&);
 	// ~Coordinates(); No se bien que onda esto (que le pondria)
-	int getX();
-	int getY();
-	int getZ();
-	int setX(int );
-	int setY(int );
-	int setZ(int );
-	bool operator== (Coordinates);
-	void operator= (Coordinates);
+	int getX(); //FUNCIONA
+	int getY(); //FUNCIONA
+	int getZ(); //FUNCIONA
+	void setX(int ); //FUNCIONA
+	void setY(int ); //FUNCIONA
+	void setZ(int ); //FUNCIONA
+	bool operator == (Coordinates);
+	Coordinates& operator = (Coordinates);
 private:
 	unsigned int x;
 	unsigned int y;

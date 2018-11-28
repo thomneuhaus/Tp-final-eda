@@ -13,34 +13,55 @@ Map::~Map()
 
 void Map::setIslands()
 {
-	srand(time(NULL));
-	islandType types[19] = { DESIERTO, BOSQUE, BOSQUE, BOSQUE, BOSQUE, PASTO, PASTO, PASTO, COLINA, COLINA, COLINA, MONTAÑA, MONTAÑA, MONTAÑA, MONTAÑA,CAMPO, CAMPO, CAMPO, CAMPO };
-	for (int i = 0; i < 19; i++) {
-		int index = rand() % 18;
+	srand((unsigned int) time(NULL));
+	islandType types[ISLANDS_AMMOUNT] = { DESIERTO, BOSQUE, BOSQUE, BOSQUE, BOSQUE, PASTO, PASTO, PASTO, COLINA, COLINA, COLINA, MONTAÑA, MONTAÑA, MONTAÑA, MONTAÑA,CAMPO, CAMPO, CAMPO, CAMPO };
+	for (int i = 0; i < ISLANDS_AMMOUNT; i++) {
+		int index = rand() % ISLANDS_AMMOUNT;
 		islandType aux = types[i];
 		types[i] = types[index];
 		types[index] = aux;
 	}
-	int numbers[18] = { 2, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 12 };
-	for (int i = 0; i < 19; i++) {
-		int index = rand() % 18;
+	int numbers[ISLANDS_AMMOUNT - 1] = { 2, 3, 3, 4, 4, 5, 5, 6, 6, 8, 8, 9, 9, 10, 10, 11, 11, 12 }; //Desierto no tiene numero
+	for (int i = 0; i < ISLANDS_AMMOUNT-1; i++) {
+		int index = rand() % (ISLANDS_AMMOUNT -1);
 		int aux = numbers[i];
 		numbers[i] = numbers[index];
 		numbers[index] = aux;
 	}
 	int aux = 0;
-	for (char position = 'A', int i = 0; i < 18; i++, position++)	//Inicializo la tierra vacia
+	for ( int i = 0, j = 0; i < ISLANDS_AMMOUNT; i++)	//Inicializo la tierra vacia
 	{
 		if (types[i] == DESIERTO) {
-			islands[i] = Island(position, 0, types[i]);
-			aux = numbers[i];
+			islands[i] = Island('A' + i, 0, types[i]);
 		}
 		else
 		{
-			islands[i] = Island(position, numbers[i], types[i]);
+			islands[i] = Island('A' + i, numbers[j], types[i]);
+			j++;
 		}
 	}
-	islands[18] = Island('A' + 18, aux, types[18]);
 }
 
+void Map::setDocks()
+{
+	srand((unsigned int)time(NULL));
+	char types[DOCKS_AMMOUNT] = { 'N', 'T', 'O', 'L', 'P', 'M' };
+	for (int i = 0; i < DOCKS_AMMOUNT; i++) {
+		int index = rand() % DOCKS_AMMOUNT;
+		char aux = types[i];
+		types[i] = types[index];
+		types[index] = aux;
+	}
 
+	for (int j = 0; j < DOCKS_AMMOUNT; j++)	
+	{
+		docks[j] = Dock(j, types[j]);
+	}
+}
+
+Island * Map::getIslands(void) {
+	return islands;
+}
+Dock * Map::getDocks(void) {
+	return docks;
+}

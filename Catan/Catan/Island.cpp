@@ -1,5 +1,8 @@
 #include "Island.h"
-
+Island::Island()
+{
+	isBlocked = false;
+}
 
 Island::Island(char position, int islandNumber, islandType type) {
 	this->position = position;
@@ -13,6 +16,13 @@ Island::~Island()
 {
 }
 
+int Island::getNumber(void) {
+	return islandNumber;
+}
+
+bool Island::getIsBlocked(void) {
+	return this->isBlocked;
+}
 
 char Island::getPosition(void) {
 	return this->position;
