@@ -30,21 +30,15 @@ Robber * Catan::getRobber(void) {
 	return &robber;
 }
 
-bool Catan::PlayerWantsToTrade(resources give[], resources request[], Player * player) {
+bool Catan::PlayerWantsToTrade(resources give[], resources request[], Player * player, Player * other) {
 	// aca va la funcion que pide si el otro player quiere cambiar.
-	bool trade = false;
+	bool trade = true;
 	return trade;
 }
 
-void Catan::ValidTrade(resources give[], resources request[], Player * player)//recibe el player que quiere hacer el cambio
+void Catan::ValidTrade(resources give[], resources request[], Player * player, Player * other)//recibe el player que quiere hacer el cambio
 {
-	Player * other;
-	if (player == player1)
-		other = player2;
-	else
-		other = player1;
-
-	for (int i = 0; give[i] != NULL; i++) {
+	for (int i = 0; give[i] != END; i++) {
 		switch (give[i])
 		{
 			case WOOD:
@@ -71,7 +65,33 @@ void Catan::ValidTrade(resources give[], resources request[], Player * player)//
 				this->catanError = ERROR_TRADING_RESOURCE;
 		}
 	}
-
+	for (int i = 0; request[i] != END; i++) {
+		switch (request[i])
+		{
+		case WOOD:
+			player->setWood(player->getWood() + 1);
+			other->setWood(other->getWood() - 1);
+			break;
+		case CLAY:
+			player->setClay(player->getClay() + 1);
+			other->setClay(other->getClay() - 1);
+			break;
+		case SHEEP:
+			player->setSheep(player->getSheep() + 1);
+			other->setSheep(other->getSheep() - 1);
+			break;
+		case WHEAT:
+			player->setWheat(player->getWheat() + 1);
+			other->setWheat(other->getWheat() - 1);
+			break;
+		case STONE:
+			player->setStone(player->getStone() + 1);
+			other->setStone(other->getStone() - 1);
+			break;
+		default:
+			this->catanError = ERROR_TRADING_RESOURCE;
+		}
+	}
 }
 
 bool Catan::checkDockTrade(resources give[], resources resource) { // se fija que todos los resources de give sean iguales
@@ -179,10 +199,22 @@ error  Catan::buildRoad(Coordinates coordinates, Player * player) {
 	return NO_ERROR;
 }
 
+bool Catan::canTrade(resources give[], resources request[], Player * player, Player * other) {
+	return player->hasResources(give) && other->hasResources(request);
+}
+
 bool Catan::tradePlayer(resources give[], resources request[], Player * player) {
-	bool answer = PlayerWantsToTrade(give, request, player);
+	Player * other;
+	if (player == player1)
+		other = player2;
+	else
+		other = player1;
+
+	if (!canTrade(give, request, player, other))
+		return false;
+	bool answer = PlayerWantsToTrade(give, request, player, other);
 	if (answer == true) {
-		ValidTrade(give, request, player);
+		ValidTrade(give, request, player, other);
 	}
 	return answer;
 }
@@ -190,10 +222,13 @@ bool Catan::tradePlayer(resources give[], resources request[], Player * player) 
 error Catan::tradeDock(resources give[], resources take, Dock dock, Player * player) {
 	bool valid;
 	resources giving;
+	if (!(player->hasResources(give)))
+		return ERROR_TRADING_PORT;
+
 	switch (dock.getTradeType()) {
 	case 'N': // caso aparte porque necesito tener 3 iguales
 		giving = give[0];
-		for (int i = 1; i <= MAX_PORT_TRADE; i++)
+		for (int i = 1; i < MAX_PORT_TRADE; i++)
 		{
 			if (give[i] != giving)
 			{
@@ -269,9 +304,7 @@ error Catan::tradeDock(resources give[], resources take, Dock dock, Player * pla
 			setError(ERROR_TRADING_PORT);
 		break;
 	}
-
 	if (getError() == NO_ERROR) {
-
 		switch (take) {
 		case WOOD:
 			player->setWood(player->getWood() + 1);
@@ -296,9 +329,13 @@ error Catan::tradeDock(resources give[], resources take, Dock dock, Player * pla
 	return getError();
 }
 
-error Catan::tradeBank(resources give[MAX_RESOURCE_AMMOUNT], resources take, Player * player) {
+error Catan::tradeBank(resources give[MAX_RESOURCE_AMMOUNT+1], resources take, Player * player) {
+	
+	if ( !(player->hasResources(give)) )
+		return ERROR_TRADING_BANK;
 	resources giving = give[0];
-	for (int i = 1; i <= MAX_RESOURCE_AMMOUNT; i++)
+	give[MAX_RESOURCE_AMMOUNT] = END;
+	for (int i = 1; i < MAX_RESOURCE_AMMOUNT; i++)
 	{
 		if (give[i] != giving)
 		{

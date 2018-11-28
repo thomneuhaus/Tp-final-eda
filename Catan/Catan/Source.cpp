@@ -8,17 +8,15 @@ int main(void) {
 	Player player2("Agustin");
 	Catan catan(&player1, &player2);
 	catan.randomize();
-	int dice1 = catan.getPlayer1()->throwDice();
-	int dice2 = catan.getPlayer1()->throwDice();
-	printf("%d %d\n", dice1, dice2);
-	catan.buildTown(Coordinates('A', 'D', 'E'), catan.getPlayer1());
-	catan.buildCity(Coordinates('A', 'D', 'E'), catan.getPlayer1());
-	catan.findNumber(dice1 + dice2, catan.getPlayer1());
-	//printf("%c\n", catan.getRobber()->getTokenCoordinates()->getX());
-	for (int i = 0; i < ISLANDS_AMMOUNT; i++) {
-		if ((catan.getMap()->getIslands()[i].getPosition() == 'A') || (catan.getMap()->getIslands()[i].getPosition() == 'D') || (catan.getMap()->getIslands()[i].getPosition() == 'E'))
-			printf("%c: %d\n", catan.getMap()->getIslands()[i].getPosition(), catan.getMap()->getIslands()[i].getNumber());
-	}
-	printf("woods:%d\nclay:%d\nsheep:%d\nwheat:%d\nstone:%d\n", catan.getPlayer1()->getWood(), catan.getPlayer1()->getClay(), catan.getPlayer1()->getSheep(), catan.getPlayer1()->getWheat(), catan.getPlayer1()->getStone());
+	catan.getPlayer1()->setWheat(4);
+	catan.getPlayer1()->setStone(4);
+	catan.getPlayer1()->setWood(4);
+	catan.getPlayer1()->setSheep(4);
+	catan.getPlayer1()->setClay(4);
+	resources myResources[5] = {WOOD, WOOD,WOOD,SHEEP,END };
+	catan.tradeBank( myResources, WHEAT, catan.getPlayer1());
+	printf("WOOD:%d\nSHEEP:%d\nCLAY:%d\nWHEAT:%d\nSTONE:%d\n", catan.getPlayer1()->getWood(), catan.getPlayer1()->getSheep(), catan.getPlayer1()->getClay(), catan.getPlayer1()->getWheat(), catan.getPlayer1()->getStone());
+	printf("%d\n", catan.getError());
 	getchar();
+
 }

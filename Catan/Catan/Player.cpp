@@ -113,3 +113,35 @@ resources* Player::selectResources(int qty) {
 	}
 	return resource;
 }
+
+bool Player::hasResources(resources resource[]) {
+	int woods = 0;
+	int clays = 0;
+	int sheep = 0;
+	int wheats = 0;
+	int stones = 0;
+
+	for (int i = 0; resource[i] != END; i++) {
+		switch (resource[i]) {
+		case WOOD:
+			woods++;
+			break;
+		case SHEEP:
+			sheep++;
+			break;
+		case STONE:
+			stones++;
+			break;
+		case WHEAT:
+			wheats++;
+			break;
+		case CLAY:
+			clays++;
+			break;
+		}
+	}
+
+	if ((getWood() < wood) || (getClay() < clay) || (getSheep() < sheep) || (getWheat() < wheat) || (getStone() < stone))
+		return false;
+	return true;
+}

@@ -19,7 +19,7 @@ public:
 
 	//Getters y Setters para recursos
 	//FUNCIONAN GETTERS Y SETTERS
-	void setWood(int);
+	void setWood(int); 
 	int getWood(void); 
 	void setClay(int);
 	int getClay(void);
@@ -39,9 +39,10 @@ public:
 	void setVictoryPoints(int);
 	AbstractBuilding * getBuildings();
 	Road * getRoads(void);
+	bool hasResources(resources[]);//FUNCIONA mira si tiene resources para tradear
 
 	int throwDice(void); //FUNCIONA
-	Coordinates selectCoordinatesForRobber(void);
+	Coordinates selectCoordinatesForRobber(void);//CUTY!!
 	resources* selectResources(int); // CUTY!! esta funcion me devuelve en un arreglo de resources los 4 resources que el player quiere dejar cuando sale el robber 
 	//void buyDevCard(void);// si queremos
 	//void throwDevelopment(developmentCard); // hacer clase development card
