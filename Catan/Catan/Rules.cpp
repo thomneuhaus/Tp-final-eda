@@ -72,6 +72,12 @@ bool Rules::canBuildTown(Player * player, Coordinates coordinates, bool isFirstT
 				return false;
 		}
 	}
+	if (!isFirstTurn) {
+		player->setWood(player->getWood() - 1); // Para cobrarle porque construyo
+		player->setClay(player->getClay() - 1);
+		player->setSheep(player->getSheep() - 1);
+		player->setWheat(player->getWheat() - 1);
+	}
 	return true;
 }
 
@@ -108,6 +114,8 @@ bool Rules::canBuildRoad(Player * player, Coordinates coordinates) {
 				return false;
 		}
 	}
+	player->setWood(player->getWood() - 1); // Para cobrarle porque construyo
+	player->setClay(player->getClay() - 1);
 	return true;
 }
 

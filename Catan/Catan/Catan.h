@@ -34,7 +34,8 @@ public:
 	void takeResources(Player *); // le saca la mitad de resources al player cuando sale el robber si el player tiene mas de 7 recursos
 	error getResourceBuildings(islandType , Player*, int);//FUNCIONA// agarra la cantidad de resources de cada isla dependiendo de si hay town o city FUNCIONA
 	void moveRobber(Player *, Player *, Coordinates); //FUNCIONA. mueve el robber a la coordinate que recibe
-
+	Player * getLongestRoadPlayer(void);
+	void setLongestRoadPlayer(Player *);
 private:
 	Player * player1; // los datos de los jugadores se guardan ahi
 	Player * player2;
@@ -42,5 +43,6 @@ private:
 	error catanError;
 	Map map;
 	Rules rules;
+	Player * longestRoad = NULL;
 };
 

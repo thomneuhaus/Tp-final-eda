@@ -44,6 +44,7 @@ public:
 	int throwDice(void); //FUNCIONA
 	Coordinates selectCoordinatesForRobber(void);//CUTY!!
 	resources* selectResources(int); // CUTY!! esta funcion me devuelve en un arreglo de resources los 4 resources que el player quiere dejar cuando sale el robber 
+	Coordinates selectCoordinates(void);//CUTY!!
 	//void buyDevCard(void);// si queremos
 	//void throwDevelopment(developmentCard); // hacer clase development card
 private:

@@ -145,3 +145,7 @@ bool Player::hasResources(resources resource[]) {
 		return false;
 	return true;
 }
+
+Coordinates Player::selectCoordinates(void) {
+	return Coordinates('A', 'D', 'E');
+}

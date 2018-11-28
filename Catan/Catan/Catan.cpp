@@ -151,10 +151,6 @@ error  Catan::buildTown(Coordinates coordinates, Player * player)
 	player->getBuildings()[player->getTownsBuilt() + player->getCitiesBuilt()] = newTown;
 	player->setVictoryPoints(player->getVictoryPoints() + 1);
 	player->setTownsBuilt(player->getTownsBuilt() + 1);
-	player->setWood(player->getWood() - 1); // Para cobrarle porque construyo
-	player->setClay(player->getClay() - 1);
-	player->setSheep(player->getSheep() - 1);
-	player->setWheat(player->getWheat() - 1);
 	return NO_ERROR;
 }
 
@@ -193,9 +189,17 @@ error  Catan::buildRoad(Coordinates coordinates, Player * player) {
 	Road newRoad(coordinates);
 	player->getRoads()[player->getRoadsBuilt()] = newRoad;
 	player->setRoadsBuilt(player->getRoadsBuilt() + 1);
-	player->setWood(player->getWood() - 1); // Para cobrarle porque construyo
-	player->setClay(player->getClay() - 1);
-
+	if (getLongestRoadPlayer() == NULL) { //si nadie tenia longest road todavia
+		if (player->getRoadsBuilt() >= LONGEST_ROAD_MIN) {
+			setLongestRoadPlayer(player);
+			player->setVictoryPoints(player->getVictoryPoints() + 2);
+		}
+	}
+	else if ((getLongestRoadPlayer()->getRoadsBuilt()) < player->getRoadsBuilt()) { //si el que tenia el longest road tiene menos roads que el que acaba de construir
+		getLongestRoadPlayer()->setVictoryPoints(getLongestRoadPlayer()->getVictoryPoints()-2);
+		player->setVictoryPoints(player->getVictoryPoints() + 2);
+		setLongestRoadPlayer(player);
+	}
 	return NO_ERROR;
 }
 
@@ -509,4 +513,12 @@ Player * Catan::getPlayer2(void) {
 
 Rules Catan::getRules() {
 	return rules;
+}
+
+Player * Catan::getLongestRoadPlayer(void) {
+	return longestRoad;
+}
+
+void Catan::setLongestRoadPlayer(Player * player) {
+	this->longestRoad = player;
 }

@@ -6,17 +6,24 @@ using namespace std;
 int main(void) {
 	Player player1("Carola");
 	Player player2("Agustin");
+	int dice1;
+	int dice2;
+	do {
+		dice1 = player1.throwDice();
+		dice2 = player2.throwDice();
+	} while (dice1 == dice2);
+	if (dice2 > dice1) {
+		Player aux;
+		aux = player2;
+		player2 = player1;
+		player1 = aux;
+	}
 	Catan catan(&player1, &player2);
 	catan.randomize();
-	catan.getPlayer1()->setWheat(4);
-	catan.getPlayer1()->setStone(4);
-	catan.getPlayer1()->setWood(4);
-	catan.getPlayer1()->setSheep(4);
-	catan.getPlayer1()->setClay(4);
-	resources myResources[5] = {WOOD, WOOD,WOOD,SHEEP,END };
-	catan.tradeBank( myResources, WHEAT, catan.getPlayer1());
-	printf("WOOD:%d\nSHEEP:%d\nCLAY:%d\nWHEAT:%d\nSTONE:%d\n", catan.getPlayer1()->getWood(), catan.getPlayer1()->getSheep(), catan.getPlayer1()->getClay(), catan.getPlayer1()->getWheat(), catan.getPlayer1()->getStone());
-	printf("%d\n", catan.getError());
+	Coordinates coordinates;
+	do {Coordinates selectCoordinates(void);
+		coordinates = catan.getPlayer1()->selectCoordinates();
+	} while (catan.getRules().canBuildTown(catan.getPlayer1(), coordinates, true));
+	catan.buildTown(coordinates, catan.getPlayer1());
 	getchar();
-
 }
