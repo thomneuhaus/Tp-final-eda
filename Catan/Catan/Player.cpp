@@ -101,12 +101,12 @@ AbstractBuilding * Player:: getBuildings() {
 	return this->buildings;
 }
 Coordinates Player::selectCoordinatesForRobber(void) {
-	Coordinates rta;
+	Coordinates rta;			// habria que actualizarla para que reciba coords por parametro y actualice las internas del robber
 	return rta;
 	// en esta funcion el jugador selecciona las coordenadas a las cuales quiere mover el robber
 }
 
-resources* Player::selectResources(int qty) {
+resources* Player::selectResources(int qty) { // habria que actualizarla para que reciba el tipo por parametro
 	resources * resource = (resources *)malloc(qty * sizeof(resources));
 	for (int i = 0; i < qty; i++) {
 		resource[i] = WOOD;
