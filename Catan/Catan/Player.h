@@ -20,31 +20,31 @@ public:
 	//Getters y Setters para recursos
 	//FUNCIONAN GETTERS Y SETTERS
 	void setWood(int); 
-	int getWood(void); 
+	int getWood(void); //devuelve la cantidad de woods que tiene el player
 	void setClay(int);
-	int getClay(void);
+	int getClay(void); //devuelve la cantidad de clays que tiene el player
 	void setSheep(int);
-	int getSheep(void);
+	int getSheep(void); //devuelve la cantidad de sheep que tiene el player
 	void setWheat(int);
-	int getWheat(void);
+	int getWheat(void); //devuelve la cantidad de wheat que tiene el player
 	void setStone(int);
-	int getStone(void);
-	int getVictoryPoints(void);
+	int getStone(void); //devuelve la cantidad de stones que tiene el player
+	int getVictoryPoints(void); // devuelve los victory points del player
 	void setTownsBuilt(int);
-	int getTownsBuilt(void);
+	int getTownsBuilt(void); // devuelve cuantas towns construyo el player
 	void setCitiesBuilt(int);
-	int getCitiesBuilt(void);
+	int getCitiesBuilt(void); // devuelve cuantas cities construyo el player
 	void setRoadsBuilt(int);
-	int getRoadsBuilt(void);
+	int getRoadsBuilt(void); // devuelve cuantos roads construyo el player
 	void setVictoryPoints(int);
-	AbstractBuilding * getBuildings();
-	Road * getRoads(void);
+	AbstractBuilding * getBuildings(); // devuelve un array con los edificios (towns y cities) que construyo el player
+	Road * getRoads(void); // devuelve un array con los caminos construidos por el player
 	bool hasResources(resources[]);//FUNCIONA mira si tiene resources para tradear
 
-	int throwDice(void); //FUNCIONA
-	Coordinates selectCoordinatesForRobber(void);//CUTY!!
-	resources* selectResources(int); // CUTY!! esta funcion me devuelve en un arreglo de resources los 4 resources que el player quiere dejar cuando sale el robber 
-	Coordinates selectCoordinates(void);//CUTY!!
+	int throwDice(void); // tira los dados
+	Coordinates selectCoordinatesForRobber(Coordinates);//Solo necesita el primer valor de las coordenadas que marca la isla donde quiero poner el robber. eso la diferencia a esta funcion de selectCoordinatesle entran las coordenadas que quiere poner en el robber
+	resources* selectResources(resources []); //  esta funcion devuelve la mitad de los resources que el player quiere dejar cuando sale el robber 
+	Coordinates selectCoordinates(Coordinates);// funcion que recibe y devuelve las coordenadas donde quiero poner cosas
 	//void buyDevCard(void);// si queremos
 	//void throwDevelopment(developmentCard); // hacer clase development card
 private:

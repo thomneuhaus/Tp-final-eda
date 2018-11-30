@@ -111,7 +111,7 @@ void Catan::setError(error error) {
 	this->catanError = error;
 }
 
-void Catan::findNumber(int diceNumber, Player * player)// recibe el numero tirado en los dados (la suma de ambos) y mira el mapa para ver si hay que recolectar recursos
+void Catan::findNumber(int diceNumber, Player * player, resources resources[], Coordinates coordinates)// recibe el numero tirado en los dados (la suma de ambos) y mira el mapa para ver si hay que recolectar recursos
 {
 	if (diceNumber == ROBBER_NUMBER) {
 		// hay que verificar si algun player tiene mas de 7 recursos
@@ -128,16 +128,16 @@ void Catan::findNumber(int diceNumber, Player * player)// recibe el numero tirad
 		suma2 += player2->getClay();
 		suma2 += player2->getWheat();
 		if (suma1 > ROBBER_AMMOUNT)
-			takeResources(player1);
+			takeResources(player1, resources);
 		if (suma2 > ROBBER_AMMOUNT)
-			takeResources(player2);
+			takeResources(player2, resources);
 		Player * other;
 		if (player == player1) {
 			other = player2;
 		}
 		else
 			other = player1;
-		moveRobber(player, other, player->selectCoordinatesForRobber());
+		moveRobber(player, other, player->selectCoordinatesForRobber(coordinates));//ARREGLAR
 	}
 	else {
 		getResource(diceNumber, player1); //se fija el resource que estamos buscando
@@ -392,8 +392,8 @@ error Catan::tradeBank(resources give[MAX_RESOURCE_AMMOUNT+1], resources take, P
 	return getError();
 }
 
-void Catan::takeResources(Player * player) {
-	resources * takeResource = player->selectResources((player->getWood() + player->getSheep() + player->getClay() + player->getWheat() + player->getStone()) / 2);
+void Catan::takeResources(Player * player, resources resourcesToTake[]) {
+	resources * takeResource = player->selectResources(resourcesToTake);
 	for (int i = 0; i < (player->getWood() + player->getSheep() + player->getClay() + player->getWheat() + player->getStone())/2; i++)
 	{
 		switch (takeResource[i]) {

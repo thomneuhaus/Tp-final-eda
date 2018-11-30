@@ -100,17 +100,12 @@ Road * Player::getRoads(void) {
 AbstractBuilding * Player:: getBuildings() {
 	return this->buildings;
 }
-Coordinates Player::selectCoordinatesForRobber(void) {
-	Coordinates rta;			// habria que actualizarla para que reciba coords por parametro y actualice las internas del robber
+Coordinates Player::selectCoordinatesForRobber(Coordinates rta) {
 	return rta;
-	// en esta funcion el jugador selecciona las coordenadas a las cuales quiere mover el robber
+	
 }
 
-resources* Player::selectResources(int qty) { // habria que actualizarla para que reciba el tipo por parametro
-	resources * resource = (resources *)malloc(qty * sizeof(resources));
-	for (int i = 0; i < qty; i++) {
-		resource[i] = WOOD;
-	}
+resources* Player::selectResources( resources resource []) {
 	return resource;
 }
 
@@ -146,6 +141,6 @@ bool Player::hasResources(resources resource[]) {
 	return true;
 }
 
-Coordinates Player::selectCoordinates(void) {
-	return Coordinates('A', 'D', 'E');
+Coordinates Player::selectCoordinates(Coordinates rta) {
+	return rta;
 }

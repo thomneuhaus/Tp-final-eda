@@ -20,4 +20,3 @@ private:
 	Island islands[ISLANDS_AMMOUNT]; // arreglo de islas
 	Dock docks[DOCKS_AMMOUNT]; // arreglo de puertos
 };
-

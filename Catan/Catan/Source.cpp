@@ -22,8 +22,8 @@ int main(void) {
 	catan.randomize();
 	Coordinates coordinates;
 	do {Coordinates selectCoordinates(void);
-		coordinates = catan.getPlayer1()->selectCoordinates();
-	} while (catan.getRules().canBuildTown(catan.getPlayer1(), coordinates, true));
+		coordinates = catan.getPlayer1()->selectCoordinates(Coordinates(0,0,0));
+	} while (catan.getRules().canBuildTown(catan.getPlayer1(), catan.getPlayer2(), coordinates, true));
 	catan.buildTown(coordinates, catan.getPlayer1());
 	getchar();
 }

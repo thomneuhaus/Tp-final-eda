@@ -42,7 +42,7 @@ void Coordinates:: setZ(int z) {
 	this->z = z;
 }
 
-bool Coordinates:: operator== (Coordinates coordinates) 
+bool Coordinates:: operator== (Coordinates coordinates) //No importa el orden de las coordenadas, compara todo con todo
 {
 	if (this->x == coordinates.getX())
 	{

@@ -1,4 +1,5 @@
 #pragma once
+#include "Coordinates.h"
 #define MAX_TOKEN	50 // maxima cantidad de piezas por jugador
 // Para los recursos l parte de la comunicacion
 // #define MAX_DEV_CARDS 50
@@ -19,6 +20,8 @@
 #define ISLANDS_AMMOUNT 19
 #define DOCKS_AMMOUNT 6
 #define LONGEST_ROAD_MIN 5
+#define NO_VALUE 6
+#define VERTEX_AMMOUNT 54
 typedef enum {
 	ERROR_GETTING_RESOURCE,
 	ERROR_TRADING_RESOURCE,
