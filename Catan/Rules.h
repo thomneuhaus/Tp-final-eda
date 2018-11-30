@@ -12,6 +12,7 @@ public:
 	bool hasAdjacentRoad(Player *, Coordinates); //para ver si hay roads vecinas
 private:
 	//Lo comente porque no lo necesito pero ya lo habia copiado y fue mucho trabajo como para borrar
+	// corregir con las correcciones de cuty si lo quieren usar
 	/*Coordinates allEdges[] = { Coordinates('0','A', '5'), Coordinates('0','A','B'), Coordinates('0','B','A'), Coordinates('0','B','C'), Coordinates('0','C',NO_VALUE),
 Coordinates('1','C','0'), Coordinates('5','A','D'),
 Coordinates('A','B',NO_VALUE), Coordinates('B','C',NO_VALUE), Coordinates('1','C','G'), Coordinates('5','D','A'),
@@ -33,7 +34,8 @@ Coordinates('2','P','S'), Coordinates('4','Q','M'), Coordinates('Q','R',NO_VALUE
 Coordinates('4','Q','3'), Coordinates('3','Q',NO_VALUE), Coordinates('3','R','Q'), Coordinates('3','R','S'), Coordinates('3','S','R'), Coordinates('3','S','2')
 	};*/
 
-	Coordinates allVertex[VERTEX_AMMOUNT] = { Coordinates('0','A', NO_VALUE), Coordinates('0','B',NO_VALUE), Coordinates('1','0','C'), Coordinates('0','5','A'), Coordinates('0','A','B'), Coordinates('0','B','C'), Coordinates('1','C',NO_VALUE), Coordinates('5','A','D'), Coordinates('3','A','B'), Coordinates('B','C','F'), Coordinates('1','C','G'), Coordinates('5','D',NO_VALUE), Coordinates('A','D','E'),
+	Coordinates allVertex[VERTEX_AMMOUNT] = { Coordinates('0','A', NO_VALUE), Coordinates('0','B',NO_VALUE), Coordinates('0','1','C'), 
+	Coordinates('0','5','A'), Coordinates('0','A','B'), Coordinates('0','B','C'), Coordinates('1','C',NO_VALUE), Coordinates('5','A','D'), Coordinates('A','B','E'), Coordinates('B','C','F'), Coordinates('1','C','G'), Coordinates('5','D',NO_VALUE), Coordinates('A','D','E'),
 	Coordinates('B','E','F'), Coordinates('C','F','G'), Coordinates('1','G',NO_VALUE), Coordinates('5','D','H'), Coordinates('D','E','I'),
 	Coordinates('E','F','J'),
 	Coordinates('F','G','K'), Coordinates('1','G','L'), Coordinates('5','H',NO_VALUE), Coordinates('D','H','I'), Coordinates('E','I','J'),
