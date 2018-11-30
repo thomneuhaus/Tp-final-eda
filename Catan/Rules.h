@@ -13,7 +13,7 @@ public:
 private:
 	//Lo comente porque no lo necesito pero ya lo habia copiado y fue mucho trabajo como para borrar
 	/*Coordinates allEdges[] = { Coordinates('0','A', '5'), Coordinates('0','A','B'), Coordinates('0','B','A'), Coordinates('0','B','C'), Coordinates('0','C',NO_VALUE),
-Coordinates('1','C','0'), Coordinates('5','A',NO_VALUE),
+Coordinates('1','C','0'), Coordinates('5','A','D'),
 Coordinates('A','B',NO_VALUE), Coordinates('B','C',NO_VALUE), Coordinates('1','C','G'), Coordinates('5','D','A'),
 Coordinates('A','D',NO_VALUE), Coordinates('A','E',NO_VALUE),
 Coordinates('B','E',NO_VALUE), Coordinates('B','F',NO_VALUE), Coordinates('C','F',NO_VALUE), Coordinates('C','G',NO_VALUE), Coordinates('1','G','C'),
@@ -23,13 +23,13 @@ Coordinates('D','E',NO_VALUE),
 Coordinates('E','F',NO_VALUE), Coordinates('F','G',NO_VALUE), Coordinates('1','G','L'), Coordinates('5','H','D'), Coordinates('D','H',NO_VALUE),
 Coordinates('D','I',NO_VALUE),
 Coordinates('E','I',NO_VALUE), Coordinates('E','J',NO_VALUE), Coordinates('F','J',NO_VALUE), Coordinates('F','K',NO_VALUE), Coordinates('G','K',NO_VALUE),
-Coordinates('G','L',NO_VALUE), Coordinates('1','L',NO_VALUE), Coordinates('5','H','4'), Coordinates('H','I',NO_VALUE), Coordinates('I','J',NO_VALUE),
-Coordinates('J','K',NO_VALUE),Coordinates('K','L',NO_VALUE), Coordinates('2','L','1'), Coordinates('H','4',NO_VALUE), Coordinates('H','M', NO_VALUE),
+Coordinates('G','L',NO_VALUE), Coordinates('1','L','G'), Coordinates('5','H','4'), Coordinates('H','I',NO_VALUE), Coordinates('I','J',NO_VALUE),
+Coordinates('J','K',NO_VALUE),Coordinates('K','L',NO_VALUE), Coordinates('2','L','1'), Coordinates('4','H','M'), Coordinates('H','M', NO_VALUE),
 Coordinates('I','M',NO_VALUE), Coordinates('I','N',NO_VALUE), Coordinates('J','N',NO_VALUE), Coordinates('J','O',NO_VALUE), Coordinates('K','O',NO_VALUE),
 Coordinates('K','P',NO_VALUE),Coordinates('L','P',NO_VALUE), Coordinates('2','L','P'), Coordinates('4','M','H'), Coordinates('M','N',NO_VALUE),
 Coordinates('N','O',NO_VALUE), Coordinates('O','P',NO_VALUE), Coordinates('2','P','L'), Coordinates('4','M','Q'), Coordinates('M','Q',NO_VALUE),
 Coordinates('N','Q',NO_VALUE), Coordinates('N','R',NO_VALUE), Coordinates('O','R',NO_VALUE), Coordinates('O','S',NO_VALUE), Coordinates('P','S',NO_VALUE),
-Coordinates('2','P','S'), Coordinates('4','Q','M'), Coordinates('Q','R',NO_VALUE), Coordinates('R','S',NO_VALUE), Coordinates('2','S',NO_VALUE),
+Coordinates('2','P','S'), Coordinates('4','Q','M'), Coordinates('Q','R',NO_VALUE), Coordinates('R','S',NO_VALUE), Coordinates('2','S','P'),
 Coordinates('4','Q','3'), Coordinates('3','Q',NO_VALUE), Coordinates('3','R','Q'), Coordinates('3','R','S'), Coordinates('3','S','R'), Coordinates('3','S','2')
 	};*/
 
