@@ -44,30 +44,48 @@ int main(void) {
 		catan = Catan(&player1, &player2, types, number);
 		catan.randomize();
 	}
-	for (int i = 0; i < 2; i++) {
-		Coordinates coordinates;
-		do {
-			coordinates = starter->selectCoordinates(Coordinates(0, 0, 0)); //como parametro pasale los coordinates donde quiere construir su town el starter
-		} while (catan.getRules().canBuildTown(starter, other, coordinates, true));
-		catan.buildTown(coordinates, starter);
 
-		do {
-			coordinates = starter->selectCoordinates(Coordinates(0, 0, 0)); //como parametro pasale los coordinates donde quiere construir su town el starter
-		} while (catan.getRules().firstCanBuildRoad(starter, coordinates));
-		catan.buildRoad(coordinates, starter);
+	Coordinates coordinates;
+	do {
+		coordinates = starter->selectCoordinates(Coordinates(0, 0, 0)); //como parametro pasale los coordinates donde quiere construir su town el starter
+	} while (!catan.getRules().canBuildTown(starter, other, coordinates, true));
+	catan.buildTown(coordinates, starter);
+
+	do {
+		coordinates = starter->selectCoordinates(Coordinates(0, 0, 0)); //como parametro pasale los coordinates donde quiere construir su town el starter
+	} while (!catan.getRules().firstCanBuildRoad(starter, coordinates));
+	catan.buildRoad(coordinates, starter);
 
 
-		do {
-			coordinates = other->selectCoordinates(Coordinates(0, 0, 0)); //como parametro pasale los coordinates donde quiere construir su town el other
-		} while (catan.getRules().canBuildTown(other, starter, coordinates, true));
-		catan.buildTown(coordinates, other);
+	do {
+		coordinates = other->selectCoordinates(Coordinates(0, 0, 0)); //como parametro pasale los coordinates donde quiere construir su town el other
+	} while (!catan.getRules().canBuildTown(other, starter, coordinates, true));
+	catan.buildTown(coordinates, other);
 
-		do {
-			coordinates = other->selectCoordinates(Coordinates(0, 0, 0)); //como parametro pasale los coordinates donde quiere construir su town el other
-		} while (catan.getRules().firstCanBuildRoad(other, coordinates));
-		catan.buildRoad(coordinates, other);
-	}
+	do {
+		coordinates = other->selectCoordinates(Coordinates(0, 0, 0)); //como parametro pasale los coordinates donde quiere construir su town el other
+	} while (!catan.getRules().firstCanBuildRoad(other, coordinates));
+	catan.buildRoad(coordinates, other);
 
+	do {
+		coordinates = other->selectCoordinates(Coordinates(0, 0, 0)); //como parametro pasale los coordinates donde quiere construir su town el other
+	} while (!catan.getRules().canBuildTown(other, starter, coordinates, true));
+	catan.buildTown(coordinates, other);
+
+	do {
+		coordinates = other->selectCoordinates(Coordinates(0, 0, 0)); //como parametro pasale los coordinates donde quiere construir su town el other
+	} while (!catan.getRules().firstCanBuildRoad(other, coordinates));
+	catan.buildRoad(coordinates, other);
+
+	do {
+		coordinates = starter->selectCoordinates(Coordinates(0, 0, 0)); //como parametro pasale los coordinates donde quiere construir su town el starter
+	} while (!catan.getRules().canBuildTown(starter, other, coordinates, true));
+	catan.buildTown(coordinates, starter);
+
+	do {
+		coordinates = starter->selectCoordinates(Coordinates(0, 0, 0)); //como parametro pasale los coordinates donde quiere construir su town el starter
+	} while (!catan.getRules().firstCanBuildRoad(starter, coordinates));
+	catan.buildRoad(coordinates, starter);
 	//Aca ya tenemos el primer turno hecho
 	//Aca va la fsm de thomas
 	getchar();
