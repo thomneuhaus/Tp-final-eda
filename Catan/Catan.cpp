@@ -1,5 +1,24 @@
 #include "Catan.h"
 
+
+Catan::Catan(Player * player1, Player* player2, char map [MAP_ITEMS_NUMBER], char numbers [ISLANDS_AMMOUNT]) {// constructor por si soy client que tenog que copiar el mapa
+	this->player1 = player1;
+	this->player2 = player2;
+	this->catanError = NO_ERROR;
+	this->map = Map(map, numbers);
+	Coordinates dessertCoord;
+	bool found = false;
+	for (int i = 0; i < ISLANDS_AMMOUNT && !found; i++) {
+		if (getMap()->getIslands()[i].getType() == DESIERTO) {
+			dessertCoord.setX(getMap()->getIslands()[i].getPosition());
+			getMap()->getIslands()[i].setBlock(true);
+			found = true;
+		}
+		else
+			getMap()->getIslands()[i].setBlock(false);
+	}
+	this->robber = Robber(dessertCoord);
+}
 Catan::Catan(Player * player1, Player * player2)
 {
 	this->player1 = player1;
@@ -168,7 +187,7 @@ error  Catan::buildCity(Coordinates coordinates, Player * player)
 		{
 			City newCity(coordinates);
 			found = true;
-			if (player->getBuildings()[i].getAbstractToken() == TOWN) { // si el building que encontre era un town
+			if (player->getBuildings()[i].getAbstractToken() == TOWN_L) { // si el building que encontre era un town
 				player->getBuildings()[i] = newCity;
 				player->setTownsBuilt(player->getTownsBuilt() - 1);
 				player->setCitiesBuilt(player->getCitiesBuilt() + 1);
@@ -517,7 +536,7 @@ error Catan::getResource(int dice, Player * player) {
 		{
 			for (int j = 0; j < player->getCitiesBuilt() + player->getTownsBuilt(); j++) {
 				if ((player->getBuildings()[j].getTokenCoordinates()->getX() == map.getIslands()[i].getPosition()) || (player->getBuildings()[j].getTokenCoordinates()->getY() == map.getIslands()[i].getPosition()) || (player->getBuildings()[j].getTokenCoordinates()->getZ() == map.getIslands()[i].getPosition())) {
-					if (player->getBuildings()[j].getAbstractToken() == TOWN) {
+					if (player->getBuildings()[j].getAbstractToken() == TOWN_L) {
 						getResourceBuildings(map.getIslands()[i].getType(), player, 1);
 					}
 					else {

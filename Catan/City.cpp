@@ -4,7 +4,7 @@
 
 City::City(Coordinates coordinates)
 {
-	this->setAbstractToken(CITY);
+	this->setAbstractToken(CITY_L);
 	this->setTokenCoordinates(coordinates);
 }
 

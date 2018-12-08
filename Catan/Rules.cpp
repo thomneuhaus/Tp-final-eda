@@ -265,7 +265,7 @@ bool Rules::canBuildCity(Player * player, Coordinates coordinates) {
 		if (*(player->getBuildings()[i].getTokenCoordinates()) == coordinates) // si encuentro un building en ese lugar
 		{
 			City newCity(coordinates);
-			if (player->getBuildings()[i].getAbstractToken() == TOWN) {
+			if (player->getBuildings()[i].getAbstractToken() == TOWN_L) {
 				return true; // porque encontre un town
 			}
 		}

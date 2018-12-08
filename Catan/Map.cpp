@@ -6,6 +6,35 @@ Map::Map()
 
 }
 
+Map::Map(char map[MAP_ITEMS_NUMBER], char numbers[ISLANDS_AMMOUNT]) { //por si soy client, copio el mapa
+	for (int i = DOCKS_AMMOUNT; i < MAP_ITEMS_NUMBER; i++) {
+		switch (map[i])
+		{
+		case WOOD:
+			islands[i] = Island('A' + i - DOCKS_AMMOUNT, numbers[i], BOSQUE);
+			break;
+		case WHEAT:
+			islands[i] = Island('A' + i - DOCKS_AMMOUNT, numbers[i], CAMPO);
+			break;
+		case STONE:
+			islands[i] = Island('A' + i - DOCKS_AMMOUNT, numbers[i], MONTAÑA);
+			break;
+		case CLAY:
+			islands[i] = Island('A' + i - DOCKS_AMMOUNT, numbers[i], COLINA);
+			break;
+		case SHEEP:
+			islands[i] = Island('A' + i - DOCKS_AMMOUNT, numbers[i], PASTO);
+			break;
+		case DESIERTO:
+			islands[i] = Island('A' + i - DOCKS_AMMOUNT, numbers[i], DESIERTO);
+			break;
+		}
+	}
+
+	for (int i = 0; i < DOCKS_AMMOUNT; i++) {
+		docks[i] = Dock(i, map[i]);
+	}
+}
 
 Map::~Map()
 {

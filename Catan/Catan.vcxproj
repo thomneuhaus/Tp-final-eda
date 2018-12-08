@@ -119,6 +119,7 @@
     <ClInclude Include="AbstractController.h" />
     <ClInclude Include="AbstractToken.h" />
     <ClInclude Include="Allegro.h" />
+    <ClInclude Include="resources.h" />
     <ClInclude Include="Town.h" />
     <ClInclude Include="Catan.h" />
     <ClInclude Include="City.h" />
@@ -130,7 +131,6 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Port.h" />
     <ClInclude Include="Dock.h" />
-    <ClInclude Include="Resources.h" />
     <ClInclude Include="Robber.h" />
     <ClInclude Include="Rules.h" />
     <ClInclude Include="Road.h" />

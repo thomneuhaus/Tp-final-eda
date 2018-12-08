@@ -1,5 +1,4 @@
 #pragma once
-#include "Resources.h"
 #include "Defines.h"
 #include "AbstractToken.h"
 // para evitar el codigo repetido entre town y city

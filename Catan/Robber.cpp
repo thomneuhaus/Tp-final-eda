@@ -3,12 +3,12 @@
 #include <ctime>
 
 Robber::Robber() {
-	setAbstractToken(ROBBER);
+	setAbstractToken(ROBBER_L);
 }
 
 Robber::Robber(Coordinates dessertCoord)
 {
-	setAbstractToken(ROBBER);
+	setAbstractToken(ROBBER_L);
 	setTokenCoordinates(dessertCoord);
 }
 

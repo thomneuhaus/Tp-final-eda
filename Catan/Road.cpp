@@ -2,13 +2,13 @@
 
 Road::Road()
 {
-	this->setAbstractToken(ROAD);
+	this->setAbstractToken(ROAD_L);
 	this->setTokenCoordinates(Coordinates(0,0,6));
 }
 
 Road::Road(Coordinates coordinates)
 {
-	this->setAbstractToken(ROAD);
+	this->setAbstractToken(ROAD_L);
 	this->setTokenCoordinates(coordinates);
 }
 

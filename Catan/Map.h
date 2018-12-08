@@ -1,6 +1,7 @@
 #pragma once
 #include "Island.h"
 #include "Dock.h"
+#include "resources.h"
 #include <iostream>
 #include <time.h>
 
@@ -10,6 +11,7 @@ class Map
 {
 public:
 	Map();
+	Map(char[MAP_ITEMS_NUMBER], char[ISLANDS_AMMOUNT]);
 	~Map();
 	Island * getIslands(void); //devuelve un array de las islas
 	Dock * getDocks(void); //devuelve un array de los puertos

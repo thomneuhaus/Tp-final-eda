@@ -1,6 +1,5 @@
 #pragma once
 #include "Defines.h"
-#include "Resources.h"
 #include "AbstractBuilding.h"
 #include "Dock.h"
 #include "Town.h"
@@ -10,6 +9,7 @@
 #include <cstdlib>
 #include <cstdio>
 #include <ctime>
+#include "resources.h"
 using namespace std;
 class Player {
 

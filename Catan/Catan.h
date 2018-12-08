@@ -3,10 +3,12 @@
 #include "Map.h"
 #include "Coordinates.h"
 #include "Rules.h"
+#include "resources.h"
 
 class Catan
 {
 public:
+	Catan(Player *, Player*, char[MAP_ITEMS_NUMBER], char[ISLANDS_AMMOUNT]);
 	Catan(Player * , Player *); //Se mandan punteros a los dos players, primero es player1
 	//~Catan();
 	// Getters y setters
