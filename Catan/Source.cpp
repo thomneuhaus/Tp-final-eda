@@ -50,29 +50,103 @@ int main(void) {
 		coordinates = starter->selectCoordinates(Coordinates(0, 0, 0)); //como parametro pasale los coordinates donde quiere construir su town el starter
 	} while (!catan.getRules().canBuildTown(starter, other, coordinates, true));
 	catan.buildTown(coordinates, starter);
+	//send construi town en coordinates
 
 	do {
 		coordinates = starter->selectCoordinates(Coordinates(0, 0, 0)); //como parametro pasale los coordinates donde quiere construir su town el starter
 	} while (!catan.getRules().firstCanBuildRoad(starter, coordinates));
 	catan.buildRoad(coordinates, starter);
-
+	//send construi un road en coordinates
 
 	do {
+		//recibo donde construye su town el
 		coordinates = other->selectCoordinates(Coordinates(0, 0, 0)); //como parametro pasale los coordinates donde quiere construir su town el other
 	} while (!catan.getRules().canBuildTown(other, starter, coordinates, true));
 	catan.buildTown(coordinates, other);
-
+	
 	do {
+		//recibo donde construye su road el
 		coordinates = other->selectCoordinates(Coordinates(0, 0, 0)); //como parametro pasale los coordinates donde quiere construir su town el other
 	} while (!catan.getRules().firstCanBuildRoad(other, coordinates));
 	catan.buildRoad(coordinates, other);
 
 	do {
+		//recibo donde construye su town el
 		coordinates = other->selectCoordinates(Coordinates(0, 0, 0)); //como parametro pasale los coordinates donde quiere construir su town el other
 	} while (!catan.getRules().canBuildTown(other, starter, coordinates, true));
 	catan.buildTown(coordinates, other);
 
+	if (isalpha(coordinates.getX())) {
+		//Para que le de los recursos de las segunda town que construyo el otro player
+		switch (catan.getMap()->getIslands()[toupper(coordinates.getX()) - 'A'].getType()) {
+		case BOSQUE:
+			other->setWood(other->getWood() + 1);
+			break;
+		case COLINA:
+			other->setClay(other->getClay() + 1);
+			break;
+		case MONTAÑA:
+			other->setStone(other->getStone() + 1);
+			break;
+		case CAMPO:
+			other->setWheat(other->getWheat() + 1);
+			break;
+		case PASTO:
+			other->setSheep(other->getSheep() + 1);
+			break;
+		case DESIERTO:
+			//Nada
+			break;
+		}
+	}
+
+	if (isalpha(coordinates.getY())) {
+		switch (catan.getMap()->getIslands()[toupper(coordinates.getY()) - 'A'].getType()) {
+		case BOSQUE:
+			other->setWood(other->getWood() + 1);
+			break;
+		case COLINA:
+			other->setClay(other->getClay() + 1);
+			break;
+		case MONTAÑA:
+			other->setStone(other->getStone() + 1);
+			break;
+		case CAMPO:
+			other->setWheat(other->getWheat() + 1);
+			break;
+		case PASTO:
+			other->setSheep(other->getSheep() + 1);
+			break;
+		case DESIERTO:
+			//Nada
+			break;
+		}
+	}
+
+	if (isalpha(coordinates.getZ())) {
+		switch (catan.getMap()->getIslands()[toupper(coordinates.getZ()) - 'A'].getType()) {
+		case BOSQUE:
+			other->setWood(other->getWood() + 1);
+			break;
+		case COLINA:
+			other->setClay(other->getClay() + 1);
+			break;
+		case MONTAÑA:
+			other->setStone(other->getStone() + 1);
+			break;
+		case CAMPO:
+			other->setWheat(other->getWheat() + 1);
+			break;
+		case PASTO:
+			other->setSheep(other->getSheep() + 1);
+			break;
+		case DESIERTO:
+			//Nada
+			break;
+		}
+	}
 	do {
+		//recibo donde construye su road el
 		coordinates = other->selectCoordinates(Coordinates(0, 0, 0)); //como parametro pasale los coordinates donde quiere construir su town el other
 	} while (!catan.getRules().firstCanBuildRoad(other, coordinates));
 	catan.buildRoad(coordinates, other);
@@ -81,11 +155,84 @@ int main(void) {
 		coordinates = starter->selectCoordinates(Coordinates(0, 0, 0)); //como parametro pasale los coordinates donde quiere construir su town el starter
 	} while (!catan.getRules().canBuildTown(starter, other, coordinates, true));
 	catan.buildTown(coordinates, starter);
+	//send construi town en coordinates
+
+	//Para que me de los recursos de las segunda town que construi
+	if (isalpha(coordinates.getX())) {
+		switch (catan.getMap()->getIslands()[toupper(coordinates.getX()) - 'A'].getType()) {
+		case BOSQUE:
+			starter->setWood(starter->getWood() + 1);
+			break;
+		case COLINA:
+			starter->setClay(starter->getClay() + 1);
+			break;
+		case MONTAÑA:
+			starter->setStone(starter->getStone() + 1);
+			break;
+		case CAMPO:
+			starter->setWheat(starter->getWheat() + 1);
+			break;
+		case PASTO:
+			starter->setSheep(starter->getSheep() + 1);
+			break;
+		case DESIERTO:
+			//Nada
+			break;
+		}
+	}
+
+	if (isalpha(coordinates.getY())) {
+		switch (catan.getMap()->getIslands()[toupper(coordinates.getY()) - 'A'].getType()) {
+		case BOSQUE:
+			starter->setWood(starter->getWood() + 1);
+			break;
+		case COLINA:
+			starter->setClay(starter->getClay() + 1);
+			break;
+		case MONTAÑA:
+			starter->setStone(starter->getStone() + 1);
+			break;
+		case CAMPO:
+			starter->setWheat(starter->getWheat() + 1);
+			break;
+		case PASTO:
+			starter->setSheep(starter->getSheep() + 1);
+			break;
+		case DESIERTO:
+			//Nada
+			break;
+		}
+	}
+
+	if (isalpha(coordinates.getZ())) {
+		switch (catan.getMap()->getIslands()[toupper(coordinates.getZ()) - 'A'].getType()) {
+		case BOSQUE:
+			starter->setWood(starter->getWood() + 1);
+			break;
+		case COLINA:
+			starter->setClay(starter->getClay() + 1);
+			break;
+		case MONTAÑA:
+			starter->setStone(starter->getStone() + 1);
+			break;
+		case CAMPO:
+			starter->setWheat(starter->getWheat() + 1);
+			break;
+		case PASTO:
+			starter->setSheep(starter->getSheep() + 1);
+			break;
+		case DESIERTO:
+			//Nada
+			break;
+		}
+	}
 
 	do {
 		coordinates = starter->selectCoordinates(Coordinates(0, 0, 0)); //como parametro pasale los coordinates donde quiere construir su town el starter
 	} while (!catan.getRules().firstCanBuildRoad(starter, coordinates));
 	catan.buildRoad(coordinates, starter);
+	//send construi road en coordinates
+
 	//Aca ya tenemos el primer turno hecho
 	//Aca va la fsm de thomas
 	getchar();
