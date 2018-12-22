@@ -61,7 +61,7 @@ int main(void) {
 	
 	//ME INTENTO CONECTAR COMO CLIENTE
 	client myPlayer(ip);
-	//!!!!!  CARTEL DE CONECTANDO, PRESIONE Q PARA SALIR  !!!!!!!!!!!!
+	Al.showTryToConnect();
 	do
 	{
 		connectionStatus = myPlayer.startConnection();
@@ -74,7 +74,7 @@ int main(void) {
 	else if (connectionStatus == CONNECTION_DECLINE)
 	{
 		myPlayer.~client();
-		//!!!!!! ESPERANDO JUGADOR, PRESIONE Q PARA SALIR !!!!!!!!!!!!!!!!
+		Al.showWaitPlayer();
 		server myPlayer(ip);
 
 		connectionStatus = myPlayer.startConnection();
