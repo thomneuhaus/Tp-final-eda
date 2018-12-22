@@ -1,20 +1,94 @@
 #include "Catan.h"
+#include "io.h"
+#include "defines.h"
+#include "controller.h"
+#include "client.h"
+#include "server.h"
 #include <cstring>
 #include <cstdlib>
 using namespace std;
 
+//AVISO IMPORTANTE: AL FINAL DE CADA TURNO SE ACTUALIZA LA PANTALLA DEL JUGADOR CON LOS CAMBIOS YA REALIZADOS.
+/* POR EJEMPLO YO QUIERO CONSTRUIR:
+ * - ACTUALIZO EL DISPLAY CON EL SIGUIENTE METODO --> Al.showGeneralDisplay(&P1, &P2, &myMap, turnoFlag); (turnoFlag en 1, si es mi turno)
+ * - HAGO LA CONSTRUCCION (LOGICA) (actualiza las fichas del jugador)
+ * - LE COMUNICO AL OTRO JUGADOR QUE CONSTRUI 
+ * - ACTUALIZO EL DISPLAY CON EL SIGUIENTE METODO --> Al.showGeneralDisplay(&P1, &P2, &myMap, turnoFlag); (turnoFlag en 0, termino m turno, le toca al otro jugador)
+*/ 
+
 int main(void) {
-	// aca va la funcion que recibe el arreglo de caracteres
-	char player_name1[255];// aca va la funcion que recibe MI NOMBRE el arreglo de caracteres
-	char player_name2[255];// funcion que recibe el NOMBRE DEL OTRO PLAYER
-	Player player1(player_name1); //insert name
-	Player player2(player_name2); //pide el nombre de la otra computadora
+	io Al;	//Inicializo allegro
 	srand(time(NULL));
 	int dice1;
 	int dice2;
+	
+	//IDENTIFICADOR DE CLIENTE O SERVIDO
+	int flagSC = AS_CLIENT;
+	
+	//CARGO EL NOMBRE DEL JUGADOR LOCAL
+	char* player1NamePointer;
+	char player_name1[255];
+	player1NamePointer = Al.getMyName();
+	int i = 0;
+	while (player1NamePointer != '/0')
+	{
+		player_name1[i] = player1NamePointer[i];
+		i++;
+	}
+	Player player1(player_name1); //insert name
+	
+	//CARGO EL NOMBRE DLE JUGADOR VISITANTW
+	char player_name2[255];// funcion que recibe el NOMBRE DEL OTRO PLAYER
+	Player player2(player_name2); //pide el nombre de la otra computadora
+	
 	Player * starter = &player1;
 	Player * other = &player2;
 	Catan catan(NULL, NULL);
+	
+	//PREPARO PARA CONECTARME
+	//Tiempo de inicio
+	int startTime = 0;
+	//Tiempo ocurrido
+	int elapsedTime = 5;
+	//Tiempo arbitrario
+	int randTime;
+	randTime = rand() % (MAX_NUMBER_TIME - MIN_NUMBER_TIME + 1) + MIN_NUMBER_TIME;
+	bool connectionStatus;
+	
+	//CARGO LA IP
+	char* ip;
+	ip = Al.getMyIp();
+	
+	//ME INTENTO CONECTAR COMO CLIENTE
+	client myPlayer(ip);
+	//!!!!!  CARTEL DE CONECTANDO, PRESIONE Q PARA SALIR  !!!!!!!!!!!!
+	do
+	{
+		connectionStatus = myPlayer.startConnection();
+	} while (((elapsedTime - startTime) < randTime) && (connectionStatus != CONNECTION_SUCCESS));
+	if (connectionStatus == CONNECTION_SUCCESS)
+	{
+		flagSC = AS_CLIENT;
+	}
+	
+	else if (connectionStatus == CONNECTION_DECLINE)
+	{
+		myPlayer.~client();
+		//!!!!!! ESPERANDO JUGADOR, PRESIONE Q PARA SALIR !!!!!!!!!!!!!!!!
+		server myPlayer(ip);
+
+		connectionStatus = myPlayer.startConnection();
+		if (connectionStatus == CONNECTION_SUCCESS)
+		{
+			flagSC = AS_SERVER;
+		}
+		else if (connectionStatus == CONNECTION_DECLINE)
+		{
+			//TERMINAR PROGRAMA
+		}
+	}
+	
+	
 	if (true) {//if(soy server)
 		do {
 			dice1 = player1.throwDice();
@@ -85,7 +159,7 @@ int main(void) {
 		case COLINA:
 			other->setClay(other->getClay() + 1);
 			break;
-		case MONTAÑA:
+		case MONTAÃ‘A:
 			other->setStone(other->getStone() + 1);
 			break;
 		case CAMPO:
@@ -108,7 +182,7 @@ int main(void) {
 		case COLINA:
 			other->setClay(other->getClay() + 1);
 			break;
-		case MONTAÑA:
+		case MONTAÃ‘A:
 			other->setStone(other->getStone() + 1);
 			break;
 		case CAMPO:
@@ -131,7 +205,7 @@ int main(void) {
 		case COLINA:
 			other->setClay(other->getClay() + 1);
 			break;
-		case MONTAÑA:
+		case MONTAÃ‘A:
 			other->setStone(other->getStone() + 1);
 			break;
 		case CAMPO:
@@ -166,7 +240,7 @@ int main(void) {
 		case COLINA:
 			starter->setClay(starter->getClay() + 1);
 			break;
-		case MONTAÑA:
+		case MONTAÃ‘A:
 			starter->setStone(starter->getStone() + 1);
 			break;
 		case CAMPO:
@@ -189,7 +263,7 @@ int main(void) {
 		case COLINA:
 			starter->setClay(starter->getClay() + 1);
 			break;
-		case MONTAÑA:
+		case MONTAÃ‘A:
 			starter->setStone(starter->getStone() + 1);
 			break;
 		case CAMPO:
@@ -212,7 +286,7 @@ int main(void) {
 		case COLINA:
 			starter->setClay(starter->getClay() + 1);
 			break;
-		case MONTAÑA:
+		case MONTAÃ‘A:
 			starter->setStone(starter->getStone() + 1);
 			break;
 		case CAMPO:
