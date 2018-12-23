@@ -1,6 +1,7 @@
 #include "Catan.h"
 #include "io.h"
 #include "defines.h"
+#include "auxiliar.h"
 #include "controller.h"
 #include "client.h"
 #include "server.h"
