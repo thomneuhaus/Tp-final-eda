@@ -22,6 +22,8 @@ int main(void) {
 	int dice1;
 	int dice2;
 	
+	message inputPlayer2; //Variable para recibir mensajes del otro jugador
+	
 	//IDENTIFICADOR DE CLIENTE O SERVIDO
 	int flagSC = AS_CLIENT;
 	
@@ -60,11 +62,11 @@ int main(void) {
 	ip = Al.getMyIp();
 	
 	//ME INTENTO CONECTAR COMO CLIENTE
-	client myPlayer(ip);
+	client myPlayerComu(ip);
 	Al.showTryToConnect();
 	do
 	{
-		connectionStatus = myPlayer.startConnection();
+		connectionStatus = myPlayerComu.startConnection();
 	} while (((elapsedTime - startTime) < randTime) && (connectionStatus != CONNECTION_SUCCESS));
 	if (connectionStatus == CONNECTION_SUCCESS)
 	{
@@ -73,11 +75,11 @@ int main(void) {
 	
 	else if (connectionStatus == CONNECTION_DECLINE)
 	{
-		myPlayer.~client();
+		myPlayerComu.~client();
 		Al.showWaitPlayer();
-		server myPlayer(ip);
+		server myPlayerComu(ip);
 
-		connectionStatus = myPlayer.startConnection();
+		connectionStatus = myPlayerComu.startConnection();
 		if (connectionStatus == CONNECTION_SUCCESS)
 		{
 			flagSC = AS_SERVER;
@@ -89,8 +91,10 @@ int main(void) {
 	}
 	
 	
-	if (true) {//if(soy server)
-		do {
+	if (flagSC == AS_SERVER)
+	{
+		do 
+		{
 			dice1 = player1.throwDice();
 			dice2 = player2.throwDice();
 		} while (dice1 == dice2);
@@ -98,17 +102,20 @@ int main(void) {
 			Player * aux = starter;
 			starter = other;
 			other = aux;// se elige aleatoriamente quien empieza
-			//send You_start
+			myPlayerComu.sendYouStart();
 		}
-		else {
-			//send i_start
+		else 
+		{
+			myPlayerComu.sendIStart();
 		}
 		catan = Catan(&player1, &player2);
 		catan.randomize();
 	}
-	else { // yo soy client
-		//recibo quien empieza
-		if (true) { //if(i_start) si el server me dice que el empieza
+	else if(flagSC == AS_CLIENT) 
+	{
+		inputPlayer2 = myPlayerComu.getMessage(); //El programa no sigue hasta recibir un mensaje del otro jugador
+		if (inputPlayer2.identifier == )
+		{
 			Player * aux = starter;
 			starter = other;
 			other = aux;
@@ -120,36 +127,164 @@ int main(void) {
 	}
 
 	Coordinates coordinates;
-	do {
-		coordinates = starter->selectCoordinates(Coordinates(0, 0, 0)); //como parametro pasale los coordinates donde quiere construir su town el starter
-	} while (!catan.getRules().canBuildTown(starter, other, coordinates, true));
-	catan.buildTown(coordinates, starter);
-	//send construi town en coordinates
-
-	do {
-		coordinates = starter->selectCoordinates(Coordinates(0, 0, 0)); //como parametro pasale los coordinates donde quiere construir su town el starter
-	} while (!catan.getRules().firstCanBuildRoad(starter, coordinates));
-	catan.buildRoad(coordinates, starter);
-	//send construi un road en coordinates
-
-	do {
-		//recibo donde construye su town el
-		coordinates = other->selectCoordinates(Coordinates(0, 0, 0)); //como parametro pasale los coordinates donde quiere construir su town el other
-	} while (!catan.getRules().canBuildTown(other, starter, coordinates, true));
-	catan.buildTown(coordinates, other);
+	bool inputFlag = false;
+	bool succes = false;
+	genIn input;
 	
-	do {
-		//recibo donde construye su road el
-		coordinates = other->selectCoordinates(Coordinates(0, 0, 0)); //como parametro pasale los coordinates donde quiere construir su town el other
-	} while (!catan.getRules().firstCanBuildRoad(other, coordinates));
-	catan.buildRoad(coordinates, other);
-
-	do {
-		//recibo donde construye su town el
-		coordinates = other->selectCoordinates(Coordinates(0, 0, 0)); //como parametro pasale los coordinates donde quiere construir su town el other
-	} while (!catan.getRules().canBuildTown(other, starter, coordinates, true));
-	catan.buildTown(coordinates, other);
-
+	//Al.showGeneralDisplay(player1, player2, &myMap, MY_TURN);
+	
+	//*******************  COLOCO UNA CIUDAD  *******************************
+	//Espero a que seleccione algo
+	while (inputFlag == false)
+	{
+		inputFlag = Al.isInput();
+	}
+	inputFlag = false;
+	//Cargo lo que selecciono en "input"
+	input = Al.getInput();
+	
+	//Si selecciono contruir un settlement
+	if(input.identifier == SETTLEMENT)
+	{	
+		while(succes == false)
+		{
+			coordinates = starter->selectCoordinates(Coordinates(input.x, input.y, input.z)); //como parametro pasale los coordinates donde quiere construir su town el starter
+			if(!catan.getRules().canBuildTown(starter, other, coordinates, true)//Si las coordenadas recibidas estan mal, pregunto nuevamente por coordenadas nuevas
+			{
+				while (inputFlag == false)
+				{
+					inputFlag = Al.isInput();
+				}
+				input = Al.getInput();
+			}
+			else
+			{
+				succes = true;
+			}
+		}		   
+		catan.buildTown(coordinates, starter);
+		//traductor coordinates clase caro a coordenates estrucuta cuty
+		if(flagSC == AS_SERVER)
+		{
+			myPlayerComu.sendSettlement(coordinatesAux,3);
+		}
+		else if(flagSC == AS_CLIENT)
+		{
+			myPlayerComu.sendSettlement(coordinatesAux,3);
+		}	   
+	}
+	//***********************************************************************
+	inputFlag = false;
+	succes = false;
+			   
+	//Al.showGeneralDisplay(player1, player2, &myMap, MY_TURN);		   
+			   
+	//*************************  COLOCO UN CAMINO  **************************
+		//Espero a que seleccione algo
+	while (inputFlag == false)
+	{
+		inputFlag = Al.isInput();
+	}
+	inputFlag = false;
+	//Cargo lo que selecciono en "input"
+	input = Al.getInput();
+	
+	//Si selecciono contruir un settlement
+	if(input.identifier == ROAD)
+	{	
+		while(succes == false)
+		{
+			coordinates = starter->selectCoordinates(Coordinates(input.x, input.y, input.z)); //como parametro pasale los coordinates donde quiere construir su town el starter
+			if(!catan.getRules().canBuildTown(starter, other, coordinates, true)//Si las coordenadas recibidas estan mal, pregunto nuevamente por coordenadas nuevas
+			{
+				while (inputFlag == false)
+				{
+					inputFlag = Al.isInput();
+				}
+				input = Al.getInput();
+			}
+			else
+			{
+				succes = true;
+			}
+		}		   
+		catan.buildRoad(coordinates, starter);
+		//traductor coordinates clase caro a coordenates estrucuta cuty
+		if(flagSC == AS_SERVER)
+		{
+			myPlayerComu.sendRoad(coordinatesAux,3);
+		}
+		else if(flagSC == AS_CLIENT)
+		{
+			myPlayerComu.sendRoad(coordinatesAux,3);
+		}	   
+	}
+	//***********************************************************************
+	
+	//Al.showGeneralDisplay(player1, player2, &myMap, YOUR_TURN);
+			   
+	//***************  RECIBO DONDE CONTRUYE SU SETTLEMENT  ****************
+	inputPlayer2 = myPlayerComu.getMessage(); //El programa no sigue hasta recibir un mensaje del otro jugador		   
+	
+	if(inputPlayer2.identifier == SETTLEMENT)
+	{
+		coordinates = other->selectCoordinates(Coordinates(inputPlayer2.x, inputPlayer2.y, inputPlayer2.z)); //como parametro pasale los coordinates donde quiere construir su town el other
+		if (catan.getRules().canBuildTown(other, starter, coordinates, true))
+		{
+			if(flagSC == AS_SERVER)
+			{
+				myPlayerComu.sendAck();
+			}
+			else if(flagSC == AS_CLIENT)
+			{
+				myPlayerComu.sendAck();
+			}
+			catan.buildTown(coordinates, other);	
+	} 
+	//***********************************************************************
+	//Al.showGeneralDisplay(player1, player2, &myMap, YOUR_TURN);	
+	//***************  RECIBO DONDE CONTRUYE SU ROAD  ****************
+	inputPlayer2 = myPlayerComu.getMessage(); //El programa no sigue hasta recibir un mensaje del otro jugador		   
+	
+	if(inputPlayer2.identifier == Road)
+	{
+		coordinates = other->selectCoordinates(Coordinates(inputPlayer2.x, inputPlayer2.y, inputPlayer2.z)); //como parametro pasale los coordinates donde quiere construir su town el other
+		if (catan.getRules().canBuildTown(other, starter, coordinates, true))
+		{
+			if(flagSC == AS_SERVER)
+			{
+				myPlayerComu.sendAck();
+			}
+			else if(flagSC == AS_CLIENT)
+			{
+				myPlayerComu.sendAck();
+			}
+			catan.buildRoad(coordinates, other);	
+	} 
+	//***********************************************************************
+		
+	//Al.showGeneralDisplay(player1, player2, &myMap, YOUR_TURN);	
+		
+	//***************  RECIBO DONDE CONTRUYE SU SETTLEMENT  ****************
+	inputPlayer2 = myPlayerComu.getMessage(); //El programa no sigue hasta recibir un mensaje del otro jugador		   
+	
+	if(inputPlayer2.identifier == SETTLEMENT)
+	{
+		coordinates = other->selectCoordinates(Coordinates(inputPlayer2.x, inputPlayer2.y, inputPlayer2.z)); //como parametro pasale los coordinates donde quiere construir su town el other
+		if (catan.getRules().canBuildTown(other, starter, coordinates, true))
+		{
+			if(flagSC == AS_SERVER)
+			{
+				myPlayerComu.sendAck();
+			}
+			else if(flagSC == AS_CLIENT)
+			{
+				myPlayerComu.sendAck();
+			}
+			catan.buildTown(coordinates, other);	
+	} 
+	//***********************************************************************
+	
 	if (isalpha(coordinates.getX())) {
 		//Para que le de los recursos de las segunda town que construyo el otro player
 		switch (catan.getMap()->getIslands()[toupper(coordinates.getX()) - 'A'].getType()) {
@@ -219,18 +354,74 @@ int main(void) {
 			break;
 		}
 	}
-	do {
-		//recibo donde construye su road el
-		coordinates = other->selectCoordinates(Coordinates(0, 0, 0)); //como parametro pasale los coordinates donde quiere construir su town el other
-	} while (!catan.getRules().firstCanBuildRoad(other, coordinates));
-	catan.buildRoad(coordinates, other);
-
-	do {
-		coordinates = starter->selectCoordinates(Coordinates(0, 0, 0)); //como parametro pasale los coordinates donde quiere construir su town el starter
-	} while (!catan.getRules().canBuildTown(starter, other, coordinates, true));
-	catan.buildTown(coordinates, starter);
-	//send construi town en coordinates
-
+		
+	//Al.showGeneralDisplay(player1, player2, &myMap, YOUR_TURN);	
+		
+	//***************  RECIBO DONDE CONTRUYE SU ROAD  ****************
+	inputPlayer2 = myPlayerComu.getMessage(); //El programa no sigue hasta recibir un mensaje del otro jugador		   
+	
+	if(inputPlayer2.identifier == Road)
+	{
+		coordinates = other->selectCoordinates(Coordinates(inputPlayer2.x, inputPlayer2.y, inputPlayer2.z)); //como parametro pasale los coordinates donde quiere construir su town el other
+		if (catan.getRules().canBuildTown(other, starter, coordinates, true))
+		{
+			if(flagSC == AS_SERVER)
+			{
+				myPlayerComu.sendAck();
+			}
+			else if(flagSC == AS_CLIENT)
+			{
+				myPlayerComu.sendAck();
+			}
+			catan.buildRoad(coordinates, other);	
+	} 
+	//***********************************************************************
+	inputFlag = false;
+	succes = false;
+		
+	//Al.showGeneralDisplay(player1, player2, &myMap, MY_TURN);
+		
+	//*******************  COLOCO UNA CIUDAD  *******************************
+	//Espero a que seleccione algo
+	while (inputFlag == false)
+	{
+		inputFlag = Al.isInput();
+	}
+	inputFlag = false;
+	//Cargo lo que selecciono en "input"
+	input = Al.getInput();
+	
+	//Si selecciono contruir un settlement
+	if(input.identifier == SETTLEMENT)
+	{	
+		while(succes == false)
+		{
+			coordinates = starter->selectCoordinates(Coordinates(input.x, input.y, input.z)); //como parametro pasale los coordinates donde quiere construir su town el starter
+			if(!catan.getRules().canBuildTown(starter, other, coordinates, true)//Si las coordenadas recibidas estan mal, pregunto nuevamente por coordenadas nuevas
+			{
+				while (inputFlag == false)
+				{
+					inputFlag = Al.isInput();
+				}
+				input = Al.getInput();
+			}
+			else
+			{
+				succes = true;
+			}
+		}		   
+		catan.buildTown(coordinates, starter);
+		//traductor coordinates clase caro a coordenates estrucuta cuty
+		if(flagSC == AS_SERVER)
+		{
+			myPlayerComu.sendSettlement(coordinatesAux,3);
+		}
+		else if(flagSC == AS_CLIENT)
+		{
+			myPlayerComu.sendSettlement(coordinatesAux,3);
+		}	   
+	}
+	//***********************************************************************
 	//Para que me de los recursos de las segunda town que construi
 	if (isalpha(coordinates.getX())) {
 		switch (catan.getMap()->getIslands()[toupper(coordinates.getX()) - 'A'].getType()) {
@@ -248,7 +439,7 @@ int main(void) {
 			break;
 		case PASTO:
 			starter->setSheep(starter->getSheep() + 1);
-			break;
+ 			break;
 		case DESIERTO:
 			//Nada
 			break;
@@ -301,12 +492,55 @@ int main(void) {
 		}
 	}
 
-	do {
-		coordinates = starter->selectCoordinates(Coordinates(0, 0, 0)); //como parametro pasale los coordinates donde quiere construir su town el starter
-	} while (!catan.getRules().firstCanBuildRoad(starter, coordinates));
-	catan.buildRoad(coordinates, starter);
-	//send construi road en coordinates
-
+	inputFlag = false;
+	succes = false;
+			   
+	//Al.showGeneralDisplay(player1, player2, &myMap, MY_TURN);
+			   
+	//*************************  COLOCO UN CAMINO  **************************
+		//Espero a que seleccione algo
+	while (inputFlag == false)
+	{
+		inputFlag = Al.isInput();
+	}
+	inputFlag = false;
+	//Cargo lo que selecciono en "input"
+	input = Al.getInput();
+	
+	//Si selecciono contruir un settlement
+	if(input.identifier == ROAD)
+	{	
+		while(succes == false)
+		{
+			coordinates = starter->selectCoordinates(Coordinates(input.x, input.y, input.z)); //como parametro pasale los coordinates donde quiere construir su town el starter
+			if(!catan.getRules().canBuildTown(starter, other, coordinates, true)//Si las coordenadas recibidas estan mal, pregunto nuevamente por coordenadas nuevas
+			{
+				while (inputFlag == false)
+				{
+					inputFlag = Al.isInput();
+				}
+				input = Al.getInput();
+			}
+			else
+			{
+				succes = true;
+			}
+		}		   
+		catan.buildRoad(coordinates, starter);
+		//traductor coordinates clase caro a coordenates estrucuta cuty
+		if(flagSC == AS_SERVER)
+		{
+			myPlayerComu.sendRoad(coordinatesAux,3);
+		}
+		else if(flagSC == AS_CLIENT)
+		{
+			myPlayerComu.sendRoad(coordinatesAux,3);
+		}	   
+	}
+	//***********************************************************************
+			   
+	//Al.showGeneralDisplay(player1, player2, &myMap, YOUR_TURN);
+		
 	//Aca ya tenemos el primer turno hecho
 	//Aca va la fsm de thomas
 	getchar();
