@@ -22,7 +22,7 @@ public:
 
 	void randomize(void); //genera la semilla para el rand (llamar una vez al principio del juego y listo.) //FUNCIONA
 	
-	void findNumber(int, Player *, resources resources[], Coordinates coordinates); // FUNCION QUE TE DIJE QUE HAY QUE ELIMINAR encuentra todas las islas que tienen el numero tirado por el dado y si el numero era un 7 se encarga de llamar a la funcion que mueve al robber
+	findNumber(int diceNumber, Player * player, resources resources1[] = NULL, resources resources2[]=NULL, Coordinates coordinates = Coordinates())// recibe el numero tirado en los dados (la suma de ambos) y mira el mapa para ver si hay que recolectar recursos. encuentra todas las islas que tienen el numero tirado por el dado y si el numero era un 7 se encarga de llamar a la funcion que mueve al robber
 	//NOTA: TODOS LOS ARRAYS DE RESOURCES DEBEN TERMINAR CON UN RESOURCE END (VER RESOURCES.H)
 	void ValidTrade(resources give[], resources request[], Player *, Player *);// si el trade era valido lo hace
 	bool PlayerWantsToTrade(resources give[], resources request[], Player *, Player *);// el player que quiere cambiar llama a esta funcion y hay que llamar a la funcion de cuty que le pregunta al otro player si quiere tradear y si quiere se llama a validtrade y sino no se hace nada

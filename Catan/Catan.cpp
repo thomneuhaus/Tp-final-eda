@@ -130,7 +130,7 @@ void Catan::setError(error error) {
 	this->catanError = error;
 }
 
-void Catan::findNumber(int diceNumber, Player * player, resources resources[] = NULL, Coordinates coordinates = Coordinates())// recibe el numero tirado en los dados (la suma de ambos) y mira el mapa para ver si hay que recolectar recursos
+void Catan::findNumber(int diceNumber, Player * player, resources resources1[] = NULL, resources resources2[]=NULL, Coordinates coordinates = Coordinates())// recibe el numero tirado en los dados (la suma de ambos) y mira el mapa para ver si hay que recolectar recursos
 {
 	if (diceNumber == ROBBER_NUMBER) {
 		// hay que verificar si algun player tiene mas de 7 recursos
@@ -147,9 +147,9 @@ void Catan::findNumber(int diceNumber, Player * player, resources resources[] = 
 		suma2 += player2->getClay();
 		suma2 += player2->getWheat();
 		if (suma1 > ROBBER_AMMOUNT)
-			takeResources(player1, resources);
+			takeResources(player1, resources1);
 		if (suma2 > ROBBER_AMMOUNT)
-			takeResources(player2, resources);
+			takeResources(player2, resources2);
 		Player * other;
 		if (player == player1) {
 			other = player2;
