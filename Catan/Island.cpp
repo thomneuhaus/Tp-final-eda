@@ -4,7 +4,7 @@ Island::Island()
 	isBlocked = false;
 }
 
-Island::Island(char position, int islandNumber, islandType type) {
+Island::Island(char position, int islandNumber, char type) {
 	this->position = position;
 	this->islandNumber = islandNumber;
 	this->type = type;
@@ -16,7 +16,7 @@ Island::~Island()
 {
 }
 
-int Island::getNumber(void) {
+char Island::getNumber(void) {
 	return islandNumber;
 }
 
@@ -32,7 +32,7 @@ void Island:: setBlock(bool isBlocked) {
 }
 
 
-islandType Island::getType(void)
+char Island::getType(void)
 {
 	return this ->type;
 }

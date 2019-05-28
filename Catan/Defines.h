@@ -18,6 +18,13 @@
 #define ROAD_L 'R'
 #define ROBBER_L 'L'
 
+#define BOSQUE 'M'
+#define COLINA 'L'
+#define MONTANIA 'P'
+#define CAMPO 'T'
+#define PASTO 'O'
+#define DESIERTO 'N'
+
 #define MAX_ROAD_AMMOUNT 15 //cantidad maxima de roads que se pueden construir
 #define MAX_TOWNS 5 //cantidad maxima de towns que se pueden construir
 #define MAX_CITIES 4 //cantidad maxima de cities que se pueden construir
@@ -26,7 +33,7 @@
 #define DOCKS_AMMOUNT 6 //cantidad de puertos
 #define MAP_ITEMS_NUMBER (ISLANDS_AMMOUNT + DOCKS_AMMOUNT)
 #define LONGEST_ROAD_MIN 5 //cantidad minima de roads para ganar longestRoad
-#define NO_VALUE 6 //coordenada "vacia"
+#define EMPTY 6
 #define VERTEX_AMMOUNT 54 //cantidad de vertices en el mapa
 typedef enum {
 	ERROR_GETTING_RESOURCE,

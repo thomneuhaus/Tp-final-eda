@@ -17,7 +17,7 @@ Map::Map(char map[MAP_ITEMS_NUMBER], char numbers[ISLANDS_AMMOUNT]) { //por si s
 			islands[i] = Island('A' + i - DOCKS_AMMOUNT, numbers[i], CAMPO);
 			break;
 		case STONE:
-			islands[i] = Island('A' + i - DOCKS_AMMOUNT, numbers[i], MONTAÑA);
+			islands[i] = Island('A' + i - DOCKS_AMMOUNT, numbers[i], MONTANIA);
 			break;
 		case CLAY:
 			islands[i] = Island('A' + i - DOCKS_AMMOUNT, numbers[i], COLINA);
@@ -43,10 +43,10 @@ Map::~Map()
 void Map::setIslands()
 {
 	srand((unsigned int) time(NULL));
-	islandType types[ISLANDS_AMMOUNT] = { DESIERTO, BOSQUE, BOSQUE, BOSQUE, BOSQUE, PASTO, PASTO, PASTO, COLINA, COLINA, COLINA, MONTAÑA, MONTAÑA, MONTAÑA, MONTAÑA,CAMPO, CAMPO, CAMPO, CAMPO };
+	char types[ISLANDS_AMMOUNT] = { DESIERTO, BOSQUE, BOSQUE, BOSQUE, BOSQUE, PASTO, PASTO, PASTO, COLINA, COLINA, COLINA, MONTANIA, MONTANIA, MONTANIA, MONTANIA,CAMPO, CAMPO, CAMPO, CAMPO };
 	for (int i = 0; i < ISLANDS_AMMOUNT; i++) {
 		int index = rand() % ISLANDS_AMMOUNT;
-		islandType aux = types[i];
+		char aux = types[i];
 		types[i] = types[index];
 		types[index] = aux;
 	}

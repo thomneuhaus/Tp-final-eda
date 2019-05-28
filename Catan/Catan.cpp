@@ -438,7 +438,7 @@ void Catan::takeResources(Player * player, resources resourcesToTake[]) {
 	}
 }
 
-error Catan::getResourceBuildings(islandType type, Player* player, int qty)
+error Catan::getResourceBuildings(char type, Player* player, int qty)
 {
 	switch (type)
 	{
@@ -454,7 +454,7 @@ error Catan::getResourceBuildings(islandType type, Player* player, int qty)
 	case CAMPO:
 		player->setWheat(player->getWheat() + qty);
 		break;
-	case MONTAÑA:
+	case MONTANIA:
 		player->setStone(player->getStone() + qty);
 		break;
 	}
@@ -525,6 +525,8 @@ void Catan::moveRobber(Player * player, Player * other, Coordinates newRobberCoo
 			other->setWood(other->getWood() - 1);
 			player->setWood(player->getWood() + 1);
 			break;
+		case END:
+		    break;
 		}
 		free(resource);
 	}

@@ -133,6 +133,8 @@ bool Player::hasResources(resources resource[]) {
 		case CLAY:
 			clays++;
 			break;
+        case END:
+            break;
 		}
 	}
 
