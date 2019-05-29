@@ -3,13 +3,13 @@
 
 class Rules {
 public:
-	bool canBuildTown(Player *, Player *, Coordinates, bool);// La idea seria que el dispatcher haga un if(canBuild) y ahi haga el build si puede hacerlo (bool en true si es el primer turno)
-	bool canBuildCity(Player *, Coordinates); //idem pero sin bool
-	bool canBuildRoad(Player *, Player*, Coordinates); //idem
-	// bool canBuyDevelopment(Player *, Coordinates);
-	bool verifyRoads(Player *, Coordinates);// se fija si hay caminos para poder construir town
-	bool firstCanBuildRoad(Player *, Coordinates); //para construir los caminos del primer turno
-	bool hasAdjacentRoad(Player *, Coordinates); //para ver si hay roads vecinas
+    error canBuildTown(Player *, Player *, Coordinates, bool);// La idea seria que el dispatcher haga un if(canBuild) y ahi haga el build si puede hacerlo (bool en true si es el primer turno)
+    error canBuildCity(Player *player, Coordinates coordinates);
+    error canBuildRoad(Player *, Player *, Coordinates); //idem
+    // bool canBuyDevelopment(Player *, Coordinates);
+    bool verifyRoads(Player *, Coordinates);// se fija si hay caminos para poder construir town
+    bool firstCanBuildRoad(Player *, Coordinates); //para construir los caminos del primer turno
+    bool hasAdjacentRoad(Player *, Coordinates); //para ver si hay roads vecinas
 private:
 	//Lo comente porque no lo necesito pero ya lo habia copiado y fue mucho trabajo como para borrar
 	// corregir con las correcciones de cuty si lo quieren usar

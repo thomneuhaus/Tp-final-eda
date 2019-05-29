@@ -35,17 +35,32 @@
 #define LONGEST_ROAD_MIN 5 //cantidad minima de roads para ganar longestRoad
 #define EMPTY 6
 #define VERTEX_AMMOUNT 54 //cantidad de vertices en el mapa
+#define SINGLE_PORT_VERTEX_AMMOUNT 12
+#define DOUBLE_PORT_VERTEX_AMMOUNT 24
+#define WOOD 'M'
+#define WHEAT 'T'
+#define SHEEP 'O'
+#define STONE 'P'
+#define CLAY 'L'
 typedef enum {
-	ERROR_GETTING_RESOURCE,
-	ERROR_TRADING_RESOURCE,
-	ERROR_TRADING_PORT,
-	NO_ERROR,
-	ERROR_TAKING_RESOURCE_POST_ROBBER,
-	ERROR_BUILDING_CITY,
-	ERROR_GETTING_RESOURCE_TOWN,
-	ERROR_GETTING_RESOURCE_CITY,
-	ERROR_TRADING_BANK
+    NO_ERROR,
+    ERROR_NO_RESOURCES,
+    ERROR_INVALID_COORDINATES,
+    ERROR_NO_ROADS_AVAILABLE,
+    ERROR_NO_CITIES_AVAILABLE,
+    ERROR_NO_TOWNS_AVAILABLE,
+    ERROR_GET_RESOURCE
 }error; // tipos de errores que pueden ocurrir
+
+typedef struct
+{
+    unsigned char wood;		// Segun reglas, maximo 9
+    unsigned char wheat;	// Segun reglas, maximo 9
+    unsigned char clay;		// Segun reglas, maximo 9
+    unsigned char stone;	// Segun reglas, maximo 9
+    unsigned char sheep;	// Segun reglas, maximo 9
+
+}tradeIn;
 
 
 

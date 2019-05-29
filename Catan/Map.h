@@ -1,7 +1,6 @@
 #pragma once
 #include "Island.h"
 #include "Dock.h"
-#include "resources.h"
 #include <iostream>
 #include <time.h>
 

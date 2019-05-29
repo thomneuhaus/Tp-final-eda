@@ -100,49 +100,9 @@ Road * Player::getRoads(void) {
 AbstractBuilding * Player:: getBuildings() {
 	return this->buildings;
 }
-Coordinates Player::selectCoordinatesForRobber(Coordinates rta) {
-	return rta;
-	
-}
 
-resources* Player::selectResources( resources resource []) {
-	return resource;
-}
-
-bool Player::hasResources(resources resource[]) {
-	int woods = 0;
-	int clays = 0;
-	int sheep = 0;
-	int wheats = 0;
-	int stones = 0;
-
-	for (int i = 0; resource[i] != END; i++) {
-		switch (resource[i]) {
-		case WOOD:
-			woods++;
-			break;
-		case SHEEP:
-			sheep++;
-			break;
-		case STONE:
-			stones++;
-			break;
-		case WHEAT:
-			wheats++;
-			break;
-		case CLAY:
-			clays++;
-			break;
-        case END:
-            break;
-		}
-	}
-
-	if ((getWood() < wood) || (getClay() < clay) || (getSheep() < sheep) || (getWheat() < wheat) || (getStone() < stone))
-		return false;
-	return true;
-}
-
-Coordinates Player::selectCoordinates(Coordinates rta) {
-	return rta;
+bool Player::hasResources(tradeIn resources) {
+    if ((getWood() < resources.wood) || (getClay() < resources.clay) || (getSheep() < resources.sheep) || (getWheat() < resources.wheat) || (getStone() < resources.stone))
+        return false;
+    return true;
 }
