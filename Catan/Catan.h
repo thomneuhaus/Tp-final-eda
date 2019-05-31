@@ -40,7 +40,7 @@ public:
     void setLongestRoadPlayer(Player *); //Cambia el player con el longestRoad
     bool canBuildTown(Player *, Player *, Coordinates, bool);// La idea seria que el dispatcher haga un if(canBuild) y ahi haga el build si puede hacerlo (bool en true si es el primer turno)
     bool canBuildCity(Player *player, Coordinates coordinates);
-    bool canBuildRoad(Player *, Player *, Coordinates);
+    bool canBuildRoad(Player *, Player *, Coordinates, bool);
 
 private:
     Player * player1; // los datos de los jugadores se guardan ahi
@@ -50,24 +50,24 @@ private:
     Map map;
     Rules rules;
     Player * longestRoad = NULL;
-    Coordinates singlePortVertexes[SINGLE_PORT_VERTEX_AMMOUNT] = {Coordinates('0','A','B'), Coordinates('0','B', NO_VALUE),
-                                                                  Coordinates('1','C','G'), Coordinates('1','G', NO_VALUE),
-                                                                  Coordinates('2','L','P'), Coordinates('2','P', NO_VALUE),
-                                                                  Coordinates('3','R','S'), Coordinates('3','R', NO_VALUE),
-                                                                  Coordinates('4','M','Q'), Coordinates('4','M', NO_VALUE),
-                                                                  Coordinates('5','D','H'), Coordinates('5','D', NO_VALUE)};
+    Coordinates singlePortVertexes[SINGLE_PORT_VERTEX_AMMOUNT] = {Coordinates('0','A','B'), Coordinates('0','B', EMPTY),
+                                                                  Coordinates('1','C','G'), Coordinates('1','G', EMPTY),
+                                                                  Coordinates('2','L','P'), Coordinates('2','P', EMPTY),
+                                                                  Coordinates('3','R','S'), Coordinates('3','R', EMPTY),
+                                                                  Coordinates('4','M','Q'), Coordinates('4','M', EMPTY),
+                                                                  Coordinates('5','D','H'), Coordinates('5','D', EMPTY)};
 
-    Coordinates doublePortVertexes[DOUBLE_PORT_VERTEX_AMMOUNT] = {Coordinates('0','5','A'), Coordinates('0','A', NO_VALUE),
-                                                                  Coordinates('0','B',NO_VALUE), Coordinates('0','B','C'),
-                                                                  Coordinates('0','1','C'), Coordinates('1','C', NO_VALUE),
-                                                                  Coordinates('1','G',NO_VALUE), Coordinates('1','G','L'),
-                                                                  Coordinates('1','2','L'), Coordinates('2','L',NO_VALUE),
-                                                                  Coordinates('2','P',NO_VALUE), Coordinates('2','P','S'),
-                                                                  Coordinates('2','3','S'), Coordinates('3','S',NO_VALUE),
-                                                                  Coordinates('3','R',NO_VALUE), Coordinates('3','Q','R'),
-                                                                  Coordinates('3','4','Q'), Coordinates('4','Q',NO_VALUE),
-                                                                  Coordinates('4','M',NO_VALUE), Coordinates('4','H','M'),
-                                                                  Coordinates('4','5','H'), Coordinates('5','H',NO_VALUE),
-                                                                  Coordinates('5','D',NO_VALUE), Coordinates('5','A','D')
+    Coordinates doublePortVertexes[DOUBLE_PORT_VERTEX_AMMOUNT] = {Coordinates('0','5','A'), Coordinates('0','A', EMPTY),
+                                                                  Coordinates('0','B',EMPTY), Coordinates('0','B','C'),
+                                                                  Coordinates('0','1','C'), Coordinates('1','C', EMPTY),
+                                                                  Coordinates('1','G',EMPTY), Coordinates('1','G','L'),
+                                                                  Coordinates('1','2','L'), Coordinates('2','L',EMPTY),
+                                                                  Coordinates('2','P',EMPTY), Coordinates('2','P','S'),
+                                                                  Coordinates('2','3','S'), Coordinates('3','S',EMPTY),
+                                                                  Coordinates('3','R',EMPTY), Coordinates('3','Q','R'),
+                                                                  Coordinates('3','4','Q'), Coordinates('4','Q',EMPTY),
+                                                                  Coordinates('4','M',EMPTY), Coordinates('4','H','M'),
+                                                                  Coordinates('4','5','H'), Coordinates('5','H',EMPTY),
+                                                                  Coordinates('5','D',EMPTY), Coordinates('5','A','D')
     };
 };

@@ -1,9 +1,9 @@
 #include "Coordinates.h"
 
 Coordinates::Coordinates() {
-	x = NO_VALUE;
-	y = NO_VALUE;
-	z = NO_VALUE;
+	x = EMPTY;
+	y = EMPTY;
+	z = EMPTY;
 }
 
  Coordinates::Coordinates(int x, int y, int z) {

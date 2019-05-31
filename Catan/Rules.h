@@ -8,7 +8,7 @@ public:
     error canBuildRoad(Player *, Player *, Coordinates); //idem
     // bool canBuyDevelopment(Player *, Coordinates);
     bool verifyRoads(Player *, Coordinates);// se fija si hay caminos para poder construir town
-    bool firstCanBuildRoad(Player *, Coordinates); //para construir los caminos del primer turno
+    error firstCanBuildRoad(Player *, Coordinates); //para construir los caminos del primer turno
     bool hasAdjacentRoad(Player *, Coordinates); //para ver si hay roads vecinas
 private:
 	//Lo comente porque no lo necesito pero ya lo habia copiado y fue mucho trabajo como para borrar

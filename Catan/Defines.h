@@ -33,7 +33,7 @@
 #define DOCKS_AMMOUNT 6 //cantidad de puertos
 #define MAP_ITEMS_NUMBER (ISLANDS_AMMOUNT + DOCKS_AMMOUNT)
 #define LONGEST_ROAD_MIN 5 //cantidad minima de roads para ganar longestRoad
-#define EMPTY 6
+#define EMPTY '6'
 #define VERTEX_AMMOUNT 54 //cantidad de vertices en el mapa
 #define SINGLE_PORT_VERTEX_AMMOUNT 12
 #define DOUBLE_PORT_VERTEX_AMMOUNT 24
